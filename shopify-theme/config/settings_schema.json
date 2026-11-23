@@ -31,8 +31,7 @@
       {
         "type": "url",
         "id": "tiktok_url",
-        "label": "TikTok",
-        "default": "https://www.tiktok.com/@giacominorichdiamonds"
+        "label": "TikTok"
       },
       {
         "type": "url",

@@ -1,6 +1,48 @@
 {
-  "current": "Default",
+  "current": {
+    "whatsapp_number": "393925791426",
+    "phone": "+39 392 579 1426",
+    "address": "Oromare · Strada Provinciale 22, Km 1,750 · 81025 Marcianise (CE)",
+    "enable_cart": false,
+    "hide_prices": false,
+    "courier_confirmed": false,
+    "delivery_neutral": "Informazioni su spedizioni e consegne disponibili su richiesta.",
+    "delivery_description": "Le spedizioni vengono effettuate tramite corriere specializzato nella gestione di beni di valore.",
+    "delivery_area": "Tutta Italia",
+    "color_black": "#08090D",
+    "color_gold": "#D4AF65",
+    "color_violet": "#7437FF",
+    "color_blue": "#39D8FF",
+    "color_ice": "#F8F8FA",
+    "show_guide": true,
+    "guide_home": "Benvenuto nel <b>Rich World</b> 💎 Scorri ed entra nelle boutique.",
+    "guide_collection": "Tocca un pezzo e chiedimi tutto su <b>WhatsApp</b>.",
+    "guide_product": "Ti piace? Premi <b>Richiedi su WhatsApp</b>: il nome arriva già nel messaggio.",
+    "guide_default": "Per qualsiasi pezzo, <b>scrivimi</b>.",
+    "tiktok_url": "https://www.tiktok.com/@giacominorichdiamonds"
+  },
   "presets": {
-    "Default": {}
+    "Default": {
+      "whatsapp_number": "393925791426",
+      "phone": "+39 392 579 1426",
+      "address": "Oromare · Strada Provinciale 22, Km 1,750 · 81025 Marcianise (CE)",
+      "enable_cart": false,
+      "hide_prices": false,
+      "courier_confirmed": false,
+      "delivery_neutral": "Informazioni su spedizioni e consegne disponibili su richiesta.",
+      "delivery_description": "Le spedizioni vengono effettuate tramite corriere specializzato nella gestione di beni di valore.",
+      "delivery_area": "Tutta Italia",
+      "color_black": "#08090D",
+      "color_gold": "#D4AF65",
+      "color_violet": "#7437FF",
+      "color_blue": "#39D8FF",
+      "color_ice": "#F8F8FA",
+      "show_guide": true,
+      "guide_home": "Benvenuto nel <b>Rich World</b> 💎 Scorri ed entra nelle boutique.",
+      "guide_collection": "Tocca un pezzo e chiedimi tutto su <b>WhatsApp</b>.",
+      "guide_product": "Ti piace? Premi <b>Richiedi su WhatsApp</b>: il nome arriva già nel messaggio.",
+      "guide_default": "Per qualsiasi pezzo, <b>scrivimi</b>.",
+      "tiktok_url": "https://www.tiktok.com/@giacominorichdiamonds"
+    }
   }
 }
