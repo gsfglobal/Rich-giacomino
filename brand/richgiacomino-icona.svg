@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g stroke-linejoin="round">
+<polygon points="140,38 50,158 195,158" fill="#53BCE9"/>
+<polygon points="140,38 250,38 195,158" fill="#F8F8FA"/>
+<polygon points="250,38 195,158 305,158" fill="#D9F8FF"/>
+<polygon points="250,38 362,38 305,158" fill="#B7F4FF"/>
+<polygon points="362,38 462,158 305,158" fill="#9C77EA"/>
+<polygon points="50,158 195,158 255,470" fill="#1577BC"/>
+<polygon points="195,158 305,158 255,470" fill="#D6FBFF"/>
+<polygon points="250,158 305,158 255,470" fill="#A4EEFF"/>
+<polygon points="285,158 305,158 255,470" fill="#58CCFA"/>
+<polygon points="305,158 462,158 255,470" fill="#2E9FD7"/>
+<g fill="none" stroke="#E6FBFF" stroke-width="5">
+<polygon points="140,38 362,38 462,158 255,470 50,158"/>
+<path d="M50 158H462M140 38L195 158L255 470L305 158L362 38M250 38L195 158M250 38L305 158"/>
+</g>
+<path d="M140 38H362" stroke="#D4AF65" stroke-width="7" stroke-linecap="round"/>
+</g></svg>
