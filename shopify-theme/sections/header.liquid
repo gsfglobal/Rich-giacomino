@@ -3,7 +3,7 @@
   <div class="wrap bar">
     <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}, home">
       {%- if section.settings.logo != blank -%}
-        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, style: 'height:36px;width:auto' }}
+        {{ section.settings.logo | image_url: width: 1200 | image_tag: alt: shop.name, widths: '400, 800, 1200', sizes: '330px', loading: 'eager' }}
       {%- else -%}
         <svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg>
         <span>{{ section.settings.title | default: shop.name }}<small>{{ section.settings.subtitle }}</small></span>

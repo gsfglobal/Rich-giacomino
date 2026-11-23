@@ -346,3 +346,6 @@ footer p.fship{margin-top:14px;font-size:.8rem;border-top:1px solid var(--line);
 .brand-h1{font-size:clamp(2rem,8.5vw,6.4rem)!important;overflow-wrap:normal!important;word-break:normal}
 .empty-title{overflow-wrap:normal;font-size:clamp(1rem,4.6vw,1.3rem)}
 @media (max-width:560px){.brand-name{font-size:clamp(.82rem,3.7vw,1.05rem);letter-spacing:-.02em}}
+/* logo image */
+.logo img{display:block;height:36px!important;width:auto!important;max-width:min(330px,calc(100vw - 120px));object-fit:contain;object-position:left center}
+footer .logo img{height:40px!important}

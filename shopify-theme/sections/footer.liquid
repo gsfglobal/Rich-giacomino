@@ -6,7 +6,7 @@
       <div class="fcol-brand">
         <a href="{{ routes.root_url }}" class="logo" style="margin-bottom:14px">
           {%- if s.logo != blank -%}
-            {{ s.logo | image_url: width: 240 | image_tag: alt: shop.name, style: 'height:36px;width:auto' }}
+            {{ s.logo | image_url: width: 1200 | image_tag: alt: shop.name, widths: '400, 800, 1200', sizes: '360px', loading: 'lazy' }}
           {%- else -%}
             <svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg><span>{{ s.title }}<small>{{ s.subtitle }}</small></span>
           {%- endif -%}
