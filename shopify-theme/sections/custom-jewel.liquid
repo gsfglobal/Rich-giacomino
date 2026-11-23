@@ -1,0 +1,264 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<section class="s cj-s" id="crea">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div>
+        {%- if s.eyebrow != blank -%}<p class="eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+        <h2>{{ s.title }}</h2>
+      </div>
+      {%- if s.intro != blank -%}<p>{{ s.intro }}</p>{%- endif -%}
+    </div>
+
+    <div class="cj" data-cj data-wa="{{ settings.whatsapp_number | remove: '+' | remove: ' ' }}" data-wa-intro="{{ s.wa_intro | escape }}">
+      <div class="cj-main">
+        <ol class="cj-progress" aria-label="{{ 'custom.progress' | t }}">
+          {%- for block in section.blocks -%}
+            <li data-dot="{{ forloop.index0 }}"{% if forloop.first %} class="on"{% endif %}><span>{{ forloop.index }}</span><em>{{ block.settings.short | default: block.settings.title }}</em></li>
+          {%- endfor -%}
+          <li data-dot="{{ section.blocks.size }}"><span>{{ section.blocks.size | plus: 1 }}</span><em>{{ 'custom.contacts' | t }}</em></li>
+        </ol>
+
+        {%- form 'contact', id: 'CustomJewelForm', class: 'cj-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="cj-done" role="status" tabindex="-1">
+              <div class="cj-done-gem" aria-hidden="true">{% render 'art', type: 'diamond' %}</div>
+              <h3>{{ s.success_title }}</h3>
+              <p>{{ s.success_text }}</p>
+            </div>
+          {%- else -%}
+            {%- if form.errors -%}<p class="note" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+            <input type="hidden" name="contact[Richiesta]" value="{{ s.subject | escape }}">
+
+            {%- for block in section.blocks -%}
+              {%- assign b = block.settings -%}
+              {%- assign opts = b.options | newline_to_br | split: '<br />' -%}
+              <fieldset class="cj-step{% if forloop.first %} on{% endif %}" data-step="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+                <legend><span class="cj-n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>{{ b.title }}</legend>
+                {%- if b.help != blank -%}<p class="cj-help">{{ b.help }}</p>{%- endif -%}
+                {%- case block.type -%}
+                  {%- when 'choice' -%}
+                    <div class="cj-opts{% if opts.size > 6 %} many{% endif %}" role="{% if b.multiple %}group{% else %}radiogroup{% endif %}">
+                      {%- for o in opts -%}
+                        {%- assign label = o | strip -%}
+                        {%- if label != blank -%}
+                          <label class="cj-opt">
+                            <input type="{% if b.multiple %}checkbox{% else %}radio{% endif %}" name="contact[{{ b.title | escape }}]{% if b.multiple %}[]{% endif %}" value="{{ label | escape }}" data-label="{{ b.short | default: b.title | escape }}"{% if b.required and b.multiple == false %} required{% endif %}>
+                            <span>{{ label }}</span>
+                          </label>
+                        {%- endif -%}
+                      {%- endfor -%}
+                    </div>
+                  {%- when 'details' -%}
+                    <div class="cj-fields">
+                      {%- for o in opts -%}
+                        {%- assign label = o | strip -%}
+                        {%- if label != blank -%}
+                          <label class="cj-field"><span>{{ label }}</span>
+                            <input type="text" name="contact[{{ label | escape }}]" data-label="{{ label | escape }}" autocomplete="off">
+                          </label>
+                        {%- endif -%}
+                      {%- endfor -%}
+                      <label class="cj-field cj-wide"><span>{{ b.notes_label }}</span>
+                        <textarea name="contact[{{ b.notes_label | escape }}]" rows="4" data-label="{{ b.notes_label | escape }}"></textarea>
+                      </label>
+                      {%- if b.photo_note != blank -%}<p class="cj-help">{{ b.photo_note }}</p>{%- endif -%}
+                    </div>
+                {%- endcase -%}
+              </fieldset>
+            {%- endfor -%}
+
+            <fieldset class="cj-step" data-step="{{ section.blocks.size }}">
+              <legend><span class="cj-n">{{ section.blocks.size | plus: 1 | prepend: '0' | slice: -2, 2 }}</span>{{ s.contact_title }}</legend>
+              <div class="cj-fields">
+                <label class="cj-field"><span>{{ 'contact.name' | t }} *</span><input type="text" name="contact[name]" autocomplete="name" required data-label="{{ 'contact.name' | t }}"></label>
+                <label class="cj-field"><span>{{ 'contact.email' | t }} *</span><input type="email" name="contact[email]" autocomplete="email" required></label>
+                <label class="cj-field"><span>{{ 'contact.phone' | t }}</span><input type="tel" name="contact[phone]" autocomplete="tel"></label>
+                <label class="cj-field"><span>{{ s.pref_label }}</span>
+                  <select name="contact[{{ s.pref_label | escape }}]" data-label="{{ s.pref_label | escape }}">
+                    {%- assign prefs = s.pref_options | newline_to_br | split: '<br />' -%}
+                    {%- for p in prefs -%}{%- assign pl = p | strip -%}{%- if pl != blank -%}<option>{{ pl }}</option>{%- endif -%}{%- endfor -%}
+                  </select>
+                </label>
+                <label class="cj-check cj-wide"><input type="checkbox" required> <span>{{ s.privacy }}</span></label>
+              </div>
+              <p class="cj-help">{{ s.quote_note }}</p>
+            </fieldset>
+
+            <div class="cj-nav">
+              <button type="button" class="btn btn-ghost" data-prev hidden>← {{ 'custom.back' | t }}</button>
+              <button type="button" class="btn btn-gold" data-next>{{ 'custom.next' | t }} →</button>
+              <button type="submit" class="btn btn-gold" data-submit hidden>{{ s.submit_label }}</button>
+              {%- if settings.whatsapp_number != blank -%}
+                <a href="#" class="btn btn-wa" data-wa-send hidden target="_blank" rel="noopener">{% render 'icon-wa' %}{{ s.wa_label }}</a>
+              {%- endif -%}
+            </div>
+            <p class="cj-err" data-err role="alert" hidden>{{ 'custom.choose' | t }}</p>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+
+      <aside class="cj-sum" aria-live="polite">
+        <div class="cj-sum-in">
+          <div class="cj-sum-gem" aria-hidden="true">
+            {%- if s.image != blank -%}
+              {{ s.image | image_url: width: 600 | image_tag: loading: 'lazy', alt: '' }}
+            {%- else -%}
+              {% render 'art', type: 'diamond' %}
+            {%- endif -%}
+          </div>
+          <p class="eyebrow">{{ s.summary_title }}</p>
+          <dl class="cj-sum-list" data-summary><div class="cj-empty"><dd>{{ s.summary_empty }}</dd></div></dl>
+          <p class="cj-sum-price">{{ 'products.price_on_request' | t }}</p>
+          <p class="cj-sum-note">{{ s.summary_note }}</p>
+        </div>
+      </aside>
+    </div>
+
+    {%- if s.appointment_title != blank -%}
+      <div class="cj-appt reveal">
+        <div>
+          <p class="eyebrow">{{ s.appointment_eyebrow }}</p>
+          <h3>{{ s.appointment_title }}</h3>
+          <p>{{ s.appointment_text }}</p>
+        </div>
+        <div class="cj-appt-ctas">
+          {%- if settings.whatsapp_number != blank -%}
+            {%- capture wa_appt -%}{{ s.appointment_wa }}{%- endcapture -%}
+            <a href="{% render 'wa-url', text: wa_appt %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ s.appointment_label }}</a>
+          {%- endif -%}
+          {%- if settings.address != blank -%}<p class="cj-addr">{{ settings.address }}</p>{%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% javascript %}
+(function(){
+  document.querySelectorAll('[data-cj]').forEach(function(root){
+    var form = root.querySelector('form'); if(!form || !root.querySelector('.cj-step')) return;
+    var steps = Array.prototype.slice.call(root.querySelectorAll('.cj-step'));
+    var dots = Array.prototype.slice.call(root.querySelectorAll('[data-dot]'));
+    var prev = root.querySelector('[data-prev]'), next = root.querySelector('[data-next]');
+    var submit = root.querySelector('[data-submit]'), wa = root.querySelector('[data-wa-send]');
+    var err = root.querySelector('[data-err]'), sum = root.querySelector('[data-summary]');
+    var i = 0;
+    function valid(step){
+      var req = step.querySelectorAll('[required]');
+      for (var k=0;k<req.length;k++){
+        var el=req[k];
+        if (el.type==='radio'){ if(!step.querySelector('input[name="'+el.name.replace(/"/g,'\\"')+'"]:checked')) return el; }
+        else if (el.type==='checkbox'){ if(!el.checked) return el; }
+        else if (!el.value.trim() || (el.type==='email' && !/^\S+@\S+\.\S+$/.test(el.value))) return el;
+      }
+      return null;
+    }
+    function show(n){
+      i = Math.max(0, Math.min(n, steps.length-1));
+      steps.forEach(function(s,k){ s.classList.toggle('on', k===i); });
+      dots.forEach(function(d,k){ d.classList.toggle('on', k===i); d.classList.toggle('done', k<i); });
+      var last = i===steps.length-1;
+      prev.hidden = i===0; next.hidden = last; submit.hidden = !last; if(wa) wa.hidden = !last;
+      err.hidden = true;
+      var bar=root.querySelector('.cj-progress'); if(bar&&dots[i]){ bar.scrollLeft = dots[i].offsetLeft - bar.clientWidth/2 + dots[i].clientWidth/2; }
+      var lg = steps[i].querySelector('legend'); if(lg){ lg.setAttribute('tabindex','-1'); }
+      var top = root.getBoundingClientRect().top + window.scrollY - 90;
+      if (window.scrollY > top) window.scrollTo({top: top, behavior: 'smooth'});
+    }
+    function data(){
+      var out=[], seen={};
+      form.querySelectorAll('input[data-label],textarea[data-label],select[data-label]').forEach(function(el){
+        var l=el.getAttribute('data-label'), v='';
+        if(el.type==='radio'||el.type==='checkbox'){ if(!el.checked) return; v=el.value; }
+        else v=(el.value||'').trim();
+        if(!v) return;
+        if(seen[l]!==undefined){ out[seen[l]][1]+=', '+v; } else { seen[l]=out.length; out.push([l,v]); }
+      });
+      return out;
+    }
+    function render(){
+      var d=data(); sum.innerHTML='';
+      if(!d.length){ sum.innerHTML='<div class="cj-empty"><dd>'+(sum.getAttribute('data-empty')||'')+'</dd></div>'; return; }
+      d.forEach(function(r){ var w=document.createElement('div'); var t=document.createElement('dt'); t.textContent=r[0]; var v=document.createElement('dd'); v.textContent=r[1]; w.appendChild(t); w.appendChild(v); sum.appendChild(w); });
+      if(wa){
+        var txt=(root.getAttribute('data-wa-intro')||'')+'\n'+d.map(function(r){return '• '+r[0]+': '+r[1];}).join('\n');
+        wa.href='https://wa.me/'+root.getAttribute('data-wa')+'?text='+encodeURIComponent(txt);
+      }
+    }
+    sum.setAttribute('data-empty', (sum.querySelector('dd')||{}).textContent||'');
+    next.addEventListener('click', function(){
+      var bad = valid(steps[i]);
+      if(bad){ err.hidden=false; bad.focus && bad.focus(); return; }
+      show(i+1);
+    });
+    prev.addEventListener('click', function(){ show(i-1); });
+    form.addEventListener('change', render); form.addEventListener('input', render);
+    form.addEventListener('submit', function(e){ var bad=valid(steps[i]); if(bad){ e.preventDefault(); err.hidden=false; } });
+    dots.forEach(function(d,k){ d.addEventListener('click', function(){ if(k<i) show(k); }); });
+    render(); show(0);
+  });
+  var done=document.querySelector('.cj-done'); if(done){ done.scrollIntoView({block:'center'}); done.focus(); }
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Crea il tuo gioiello",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Atelier Bee Diamonds" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Crea il tuo gioiello" },
+    { "type": "textarea", "id": "intro", "label": "Introduzione", "default": "Scegli tipo, metallo e pietra: Giacomino ti ricontatta con un preventivo personalizzato." },
+    { "type": "text", "id": "subject", "label": "Oggetto della richiesta (nell'email)", "default": "Gioiello su misura — richiesta preventivo" },
+    { "type": "header", "content": "Riepilogo" },
+    { "type": "image_picker", "id": "image", "label": "Immagine nel riepilogo (facoltativa)" },
+    { "type": "text", "id": "summary_title", "label": "Titolo riepilogo", "default": "Il tuo gioiello" },
+    { "type": "text", "id": "summary_empty", "label": "Testo riepilogo vuoto", "default": "Le tue scelte appariranno qui." },
+    { "type": "textarea", "id": "summary_note", "label": "Nota riepilogo", "default": "Il preventivo è personalizzato: dipende da pietra, metallo e lavorazione." },
+    { "type": "header", "content": "Contatti e invio" },
+    { "type": "text", "id": "contact_title", "label": "Titolo passo contatti", "default": "Come ti ricontattiamo" },
+    { "type": "text", "id": "pref_label", "label": "Etichetta preferenza", "default": "Preferisci essere contattato via" },
+    { "type": "textarea", "id": "pref_options", "label": "Opzioni preferenza (una per riga)", "default": "WhatsApp\nTelefono\nEmail\nAppuntamento in sede\nVideochiamata" },
+    { "type": "textarea", "id": "privacy", "label": "Consenso privacy", "default": "Acconsento al trattamento dei dati per ricevere il preventivo, come descritto nella Privacy Policy." },
+    { "type": "textarea", "id": "quote_note", "label": "Nota prima dell'invio", "default": "Nessun impegno: la richiesta non è un ordine. Riceverai una proposta con tempi e costi prima di qualsiasi lavorazione." },
+    { "type": "text", "id": "submit_label", "label": "Pulsante invio", "default": "Richiedi il preventivo" },
+    { "type": "text", "id": "wa_label", "label": "Pulsante WhatsApp", "default": "Invia su WhatsApp" },
+    { "type": "textarea", "id": "wa_intro", "label": "Inizio messaggio WhatsApp", "default": "Ciao Giacomino! Vorrei un preventivo per un gioiello su misura:" },
+    { "type": "text", "id": "success_title", "label": "Titolo dopo l'invio", "default": "Richiesta inviata" },
+    { "type": "textarea", "id": "success_text", "label": "Testo dopo l'invio", "default": "Grazie! Giacomino ti ricontatterà con una proposta. Se hai foto di riferimento, mandale su WhatsApp." },
+    { "type": "header", "content": "Appuntamento" },
+    { "type": "text", "id": "appointment_eyebrow", "label": "Sopratitolo", "default": "Preferisci parlarne di persona?" },
+    { "type": "text", "id": "appointment_title", "label": "Titolo (vuoto = nascosto)", "default": "Prenota una consulenza" },
+    { "type": "textarea", "id": "appointment_text", "label": "Testo", "default": "In sede o in videochiamata: guardiamo insieme pietre, montature e idee prima del preventivo." },
+    { "type": "text", "id": "appointment_label", "label": "Pulsante", "default": "Prenota su WhatsApp" },
+    { "type": "textarea", "id": "appointment_wa", "label": "Messaggio WhatsApp", "default": "Ciao Giacomino! Vorrei prenotare una consulenza per un gioiello su misura." }
+  ],
+  "blocks": [
+    {
+      "type": "choice", "name": "Passo a scelta",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Domanda", "default": "Che gioiello desideri?" },
+        { "type": "text", "id": "short", "label": "Nome breve (riepilogo)", "default": "Gioiello" },
+        { "type": "text", "id": "help", "label": "Aiuto (facoltativo)" },
+        { "type": "textarea", "id": "options", "label": "Opzioni (una per riga)", "default": "Anello\nAnello di fidanzamento\nCollana / ciondolo\nBracciale tennis\nOrecchini\nAltro" },
+        { "type": "checkbox", "id": "multiple", "label": "Scelta multipla", "default": false },
+        { "type": "checkbox", "id": "required", "label": "Obbligatorio", "default": true }
+      ]
+    },
+    {
+      "type": "details", "name": "Passo dettagli",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Titolo", "default": "Dettagli e idee" },
+        { "type": "text", "id": "short", "label": "Nome breve", "default": "Dettagli" },
+        { "type": "text", "id": "help", "label": "Aiuto (facoltativo)" },
+        { "type": "textarea", "id": "options", "label": "Campi di testo (uno per riga)", "default": "Misura (es. anello 14, lunghezza collana)\nIncisione" },
+        { "type": "text", "id": "notes_label", "label": "Etichetta note", "default": "Descrivi la tua idea" },
+        { "type": "textarea", "id": "photo_note", "label": "Nota foto di riferimento", "default": "Hai una foto o uno schizzo? Dopo l'invio mandalo su WhatsApp." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Crea il tuo gioiello" }]
+}
+{% endschema %}

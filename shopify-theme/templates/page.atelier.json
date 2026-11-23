@@ -1,0 +1,164 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Atelier Bee Diamonds",
+        "title": "Crea il tuo",
+        "gold": "gioiello",
+        "text": "Anelli, collane, bracciali e orecchini su misura. Scegli le basi, Giacomino ti prepara un preventivo personalizzato.",
+        "glow": "#7437FF"
+      }
+    },
+    "steps": {
+      "type": "atelier-steps",
+      "blocks": {
+        "s0": {
+          "type": "step",
+          "settings": {
+            "title": "Raccontaci l'idea",
+            "text": "Scegli il tipo di gioiello, il metallo e la pietra, oppure descrivi liberamente cosa desideri."
+          }
+        },
+        "s1": {
+          "type": "step",
+          "settings": {
+            "title": "Consulenza",
+            "text": "Giacomino ti ricontatta su WhatsApp, al telefono o in sede per definire i dettagli."
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "title": "Preventivo",
+            "text": "Ricevi una proposta personalizzata con costi e tempi, prima di qualsiasi lavorazione."
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "title": "Realizzazione",
+            "text": "Dopo la tua conferma il gioiello viene realizzato secondo il progetto concordato."
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "title": "Consegna",
+            "text": "Ritiro in sede o spedizione, con le modalità concordate."
+          }
+        }
+      },
+      "block_order": [
+        "s0",
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {}
+    },
+    "config": {
+      "type": "custom-jewel",
+      "blocks": {
+        "b0": {
+          "type": "choice",
+          "settings": {
+            "title": "Che gioiello desideri?",
+            "short": "Gioiello",
+            "help": "",
+            "options": "Anello\nAnello di fidanzamento\nCollana / ciondolo\nBracciale tennis\nOrecchini\nCatena / Cuban link\nAltro",
+            "multiple": false,
+            "required": true
+          }
+        },
+        "b1": {
+          "type": "choice",
+          "settings": {
+            "title": "Quale metallo?",
+            "short": "Metallo",
+            "help": "Se non sei sicuro, scegli «Da consigliare».",
+            "options": "Oro giallo\nOro bianco\nOro rosa\nPlatino\nDa consigliare",
+            "multiple": false,
+            "required": true
+          }
+        },
+        "b2": {
+          "type": "choice",
+          "settings": {
+            "title": "Quale pietra?",
+            "short": "Pietra",
+            "help": "",
+            "options": "Diamante\nSmeraldo\nRubino\nZaffiro\nSenza pietre\nDa consigliare",
+            "multiple": false,
+            "required": true
+          }
+        },
+        "b3": {
+          "type": "choice",
+          "settings": {
+            "title": "Forma della pietra",
+            "short": "Forma",
+            "help": "Per i gioielli con pietra principale.",
+            "options": "Tonda (brillante)\nOvale\nPrincess\nSmeraldo\nPera\nCuore\nMarquise\nCuscino\nDa consigliare",
+            "multiple": false,
+            "required": false
+          }
+        },
+        "b4": {
+          "type": "choice",
+          "settings": {
+            "title": "Dimensione della pietra",
+            "short": "Caratura",
+            "help": "Indicativa: la definiamo insieme in consulenza.",
+            "options": "Fino a 0,30 ct\n0,30 – 0,70 ct\n0,70 – 1 ct\nOltre 1 ct\nDa consigliare",
+            "multiple": false,
+            "required": false
+          }
+        },
+        "b5": {
+          "type": "details",
+          "settings": {
+            "title": "Dettagli e idee",
+            "short": "Dettagli",
+            "help": "",
+            "options": "Misura (es. anello 14, lunghezza collana)\nIncisione"
+          }
+        },
+        "b6": {
+          "type": "choice",
+          "settings": {
+            "title": "Budget indicativo",
+            "short": "Budget",
+            "help": "Ci aiuta a proporti le soluzioni giuste.",
+            "options": "Fino a 2.000 €\n2.000 – 5.000 €\n5.000 – 10.000 €\n10.000 – 25.000 €\nOltre 25.000 €\nPreferisco parlarne",
+            "multiple": false,
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5",
+        "b6"
+      ],
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "compact": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "steps",
+    "config",
+    "main"
+  ]
+}

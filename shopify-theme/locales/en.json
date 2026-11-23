@@ -98,5 +98,12 @@
     "message": "Message",
     "send": "Send",
     "success": "Thank you, we'll reply soon."
+  },
+  "custom": {
+    "progress": "Steps",
+    "contacts": "Contact",
+    "back": "Back",
+    "next": "Next",
+    "choose": "Complete this step to continue."
   }
 }

@@ -98,5 +98,12 @@
     "message": "Messaggio",
     "send": "Invia",
     "success": "Grazie, ti risponderemo al più presto."
+  },
+  "custom": {
+    "progress": "Passaggi",
+    "contacts": "Contatti",
+    "back": "Indietro",
+    "next": "Avanti",
+    "choose": "Completa questo passaggio per continuare."
   }
 }
