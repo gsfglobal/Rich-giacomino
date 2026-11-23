@@ -4,7 +4,7 @@
     echo s.wa_message
   endcapture
 -%}
-<section class="hero" id="hero" data-diamond="{% if s.diamond != blank %}{{ s.diamond | image_url: width: 900 }}{% else %}{{ 'diamond.webp' | asset_url }}{% endif %}" data-sign="{{ s.sign | escape }}" data-watch1="{% if s.watch_1 != blank %}{{ s.watch_1 | image_url: width: 1200 }}{% endif %}" data-watch2="{% if s.watch_2 != blank %}{{ s.watch_2 | image_url: width: 1200 }}{% endif %}" data-three="{{ 'three.min.js' | asset_url }}">
+<section class="hero" id="hero" data-diamond="{% if s.diamond != blank %}{{ s.diamond | image_url: width: 900 }}{% else %}{{ 'diamond.webp' | asset_url }}{% endif %}" data-sign="{{ s.sign | escape }}" data-watch1="{% if s.watch_1 != blank %}{{ s.watch_1 | image_url: width: 900 }}{% endif %}" data-watch2="{% if s.watch_2 != blank %}{{ s.watch_2 | image_url: width: 900 }}{% endif %}" data-obj1="{% if s.object_1 != blank %}{{ s.object_1 | image_url: width: 700 }}{% endif %}" data-obj2="{% if s.object_2 != blank %}{{ s.object_2 | image_url: width: 700 }}{% endif %}" data-obj3="{% if s.object_3 != blank %}{{ s.object_3 | image_url: width: 600 }}{% endif %}" data-three="{{ 'three.min.js' | asset_url }}">
   <div class="stick">
     <div class="fallback-hero"></div>
     <canvas id="scene" aria-hidden="true"></canvas>
@@ -38,6 +38,9 @@
     { "type": "image_picker", "id": "diamond", "label": "Diamante (PNG/WebP scontornato)" },
     { "type": "image_picker", "id": "watch_1", "label": "Orologio sinistro (PNG/WebP scontornato)", "info": "Vuoto = orologio 3D generico" },
     { "type": "image_picker", "id": "watch_2", "label": "Orologio destro (PNG/WebP scontornato)", "info": "Vuoto = orologio 3D generico" },
+    { "type": "image_picker", "id": "object_1", "label": "Oggetto in alto a sinistra (PNG/WebP scontornato)", "info": "Vuoto = catena 3D generica" },
+    { "type": "image_picker", "id": "object_2", "label": "Oggetto in alto a destra (PNG/WebP scontornato)", "info": "Vuoto = borsa 3D generica" },
+    { "type": "image_picker", "id": "object_3", "label": "Oggetto vicino alla mano (PNG/WebP scontornato)", "info": "Vuoto = anello 3D generico" },
     { "type": "text", "id": "sign", "label": "Insegna della boutique 3D", "default": "RICH WORLD" },
     { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Richgiacomino · Bee Diamonds" },
     { "type": "text", "id": "line1", "label": "Titolo riga 1", "default": "Welcome to the 💎" },

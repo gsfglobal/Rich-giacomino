@@ -14,7 +14,7 @@
       <span class="brand">{{ product.vendor }}</span>
       <span class="nm">{{ product.title }}</span>
       <span class="av">
-        {%- if product.available -%}{{ 'products.available' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
+        {%- if product.metafields.custom.disponibilita.value != blank -%}{{ product.metafields.custom.disponibilita.value }}{%- elsif product.available -%}{{ 'products.available' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
       </span>
       <span class="pr gold">{% render 'price', product: product %}</span>
     </div>

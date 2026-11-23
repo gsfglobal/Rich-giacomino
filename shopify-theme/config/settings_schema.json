@@ -37,6 +37,23 @@
         "type": "url",
         "id": "instagram_url",
         "label": "Instagram"
+      },
+      {
+        "type": "header",
+        "content": "Miss Giulia (assistente IA)"
+      },
+      {
+        "type": "checkbox",
+        "id": "giulia_enabled",
+        "label": "Mostra il pulsante di Miss Giulia",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "giulia_agent_id",
+        "label": "ID agente ElevenLabs di Miss Giulia",
+        "info": "Lascia vuoto per nascondere il pulsante",
+        "default": "agent_0101m84gt4tgffn8x5kwvkrfnzpp"
       }
     ]
   },

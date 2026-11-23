@@ -19,7 +19,9 @@
     "guide_collection": "Tocca un pezzo e chiedimi tutto su <b>WhatsApp</b>.",
     "guide_product": "Ti piace? Premi <b>Richiedi su WhatsApp</b>: il nome arriva già nel messaggio.",
     "guide_default": "Per qualsiasi pezzo, <b>scrivimi</b>.",
-    "tiktok_url": "https://www.tiktok.com/@giacominorichdiamonds"
+    "tiktok_url": "https://www.tiktok.com/@giacominorichdiamonds",
+    "favicon": "shopify://shop_images/richgiacomino-favicon-cristallo.png",
+    "share_image": "shopify://shop_images/richgiacomino-logo-cristallo.png"
   },
   "presets": {
     "Default": {

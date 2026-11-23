@@ -8,7 +8,8 @@
         "explore_menu": "footer",
         "brands_menu": "footer-brands",
         "care_menu": "customer-care",
-        "brands_link": "/pages/marchi"
+        "brands_link": "/pages/marchi",
+        "logo": "shopify://shop_images/richgiacomino-logo-cristallo.png"
       }
     }
   },

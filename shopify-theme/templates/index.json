@@ -2,7 +2,13 @@
   "sections": {
     "hero": {
       "type": "rich-hero",
-      "settings": {}
+      "settings": {
+        "watch_1": "shopify://shop_images/hero-orologio-3d-1.webp",
+        "watch_2": "shopify://shop_images/hero-orologio-3d-2.webp",
+        "object_1": "shopify://shop_images/hero-bracciale-3d.webp",
+        "object_2": "shopify://shop_images/hero-borsa-3d.webp",
+        "object_3": "shopify://shop_images/hero-anello-3d.webp"
+      }
     },
     "marquee": {
       "type": "marquee",
@@ -115,7 +121,8 @@
     },
     "featured": {
       "type": "featured-collection",
-      "settings": {}
+      "settings": {},
+      "disabled": true
     },
     "vip": {
       "type": "vip",
@@ -127,35 +134,41 @@
         "r0": {
           "type": "reel",
           "settings": {
-            "title": "Unboxing orologio"
+            "title": "Richgiacomino",
+            "url": "https://www.tiktok.com/@giacominorichdiamonds/video/7693904190002695457"
           }
         },
         "r1": {
           "type": "reel",
           "settings": {
-            "title": "Il caveau dei diamanti"
+            "title": "Richgiacomino",
+            "url": "https://www.tiktok.com/@giacominorichdiamonds/video/7694780739308506400"
           }
         },
         "r2": {
           "type": "reel",
           "settings": {
-            "title": "Iced out da vicino"
+            "title": "Richgiacomino",
+            "url": "https://www.tiktok.com/@giacominorichdiamonds/video/7693910124687133985"
           }
         },
         "r3": {
           "type": "reel",
           "settings": {
-            "title": "Nuovo drop"
+            "title": "Richgiacomino",
+            "url": "https://www.tiktok.com/@giacominorichdiamonds/video/7710441192722337056"
           }
         }
       },
       "block_order": [
-        "r0",
+        "r3",
         "r1",
         "r2",
-        "r3"
+        "r0"
       ],
-      "settings": {}
+      "settings": {
+        "profile_embed": false
+      }
     },
     "trust": {
       "type": "trust",
@@ -278,17 +291,58 @@
     "delivery": {
       "type": "luxury-delivery",
       "settings": {}
+    },
+    "catalog": {
+      "type": "home-catalog",
+      "blocks": {
+        "t1": {
+          "type": "tab",
+          "settings": {
+            "collection": "orologi",
+            "label": "Orologi"
+          }
+        },
+        "t2": {
+          "type": "tab",
+          "settings": {
+            "collection": "gioielli",
+            "label": "Gioielli"
+          }
+        },
+        "t3": {
+          "type": "tab",
+          "settings": {
+            "collection": "borse",
+            "label": "Borse"
+          }
+        },
+        "t4": {
+          "type": "tab",
+          "settings": {
+            "collection": "accessori",
+            "label": "Accessori"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "marquee",
+    "catalog",
     "boutiques",
     "brands",
     "featured",
     "vip",
     "delivery",
-    "reels",
-    "trust"
+    "trust",
+    "reels"
   ]
 }

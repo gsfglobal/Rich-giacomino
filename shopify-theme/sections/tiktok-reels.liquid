@@ -1,29 +1,62 @@
+{%- liquid
+  assign tt_handle = settings.tiktok_url | split: '@' | last | split: '?' | first | split: '/' | first
+  assign has_handle = false
+  if settings.tiktok_url contains '@' and tt_handle != blank
+    assign has_handle = true
+  endif
+  assign show_profile = false
+  if section.settings.profile_embed and has_handle
+    assign show_profile = true
+  endif
+-%}
 <section class="s" style="padding-top:20px">
   <div class="wrap">
     <div class="s-head reveal">
       <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div>
       {%- if settings.tiktok_url != blank -%}<a href="{{ settings.tiktok_url }}" target="_blank" rel="noopener" class="btn btn-ghost">{{ section.settings.link_label }} ↗</a>{%- endif -%}
     </div>
-    <div class="reels">
+
+    {%- comment -%} Singoli video TikTok (link .../video/ID), video caricati su Shopify o copertine {%- endcomment -%}
+    {%- capture reels -%}
       {%- for block in section.blocks -%}
         {%- assign b = block.settings -%}
-        <a class="reel reveal" href="{{ b.url | default: settings.tiktok_url }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
-          <div class="bg">
-            {%- if b.video != blank -%}
-              {{ b.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, style: 'width:100%;height:100%;object-fit:cover' }}
-            {%- elsif b.image != blank -%}
-              {{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', style: 'width:100%;height:100%;object-fit:cover' }}
-            {%- else -%}
-              <div style="width:100%;height:100%;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--violet) 40%,transparent),transparent 60%),linear-gradient(180deg,#0d0e15,#08090D)"></div>
-            {%- endif -%}
+        {%- assign tt_id = blank -%}
+        {%- if b.url contains '/video/' -%}
+          {%- assign tt_id = b.url | split: '/video/' | last | split: '?' | first | split: '/' | first -%}
+        {%- endif -%}
+        {%- if tt_id != blank -%}
+          <div class="reel reel-embed reveal" {{ block.shopify_attributes }}>
+            <iframe src="https://www.tiktok.com/player/v1/{{ tt_id }}?autoplay=1&muted=1&loop=1&music_info=0&description=0&rel=0" title="{{ b.title | default: 'Video TikTok' | escape }}" loading="lazy" allow="fullscreen; encrypted-media" allowfullscreen></iframe>
           </div>
-          {%- if b.video == blank -%}<div class="play"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3l11 7-11 7Z" fill="#fff"/></svg></div>{%- endif -%}
-          <b>{{ b.title }}</b>
-          {%- if b.text != blank -%}<small>{{ b.text }}</small>{%- endif -%}
-          <span class="ask">{{ section.settings.cta }} ↗</span>
-        </a>
+        {%- elsif b.video != blank or b.image != blank or show_profile == false -%}
+          <a class="reel reveal" href="{{ b.url | default: settings.tiktok_url }}" target="_blank" rel="noopener" {{ block.shopify_attributes }}>
+            <div class="bg">
+              {%- if b.video != blank -%}
+                {{ b.video | video_tag: autoplay: true, loop: true, muted: true, playsinline: true, style: 'width:100%;height:100%;object-fit:cover' }}
+              {%- elsif b.image != blank -%}
+                {{ b.image | image_url: width: 600 | image_tag: loading: 'lazy', style: 'width:100%;height:100%;object-fit:cover' }}
+              {%- else -%}
+                <div style="width:100%;height:100%;background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--violet) 40%,transparent),transparent 60%),linear-gradient(180deg,#0d0e15,#08090D)"></div>
+              {%- endif -%}
+            </div>
+            {%- if b.video == blank -%}<div class="play"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M6 3l11 7-11 7Z" fill="#fff"/></svg></div>{%- endif -%}
+            <b>{{ b.title }}</b>
+            {%- if b.text != blank -%}<small>{{ b.text }}</small>{%- endif -%}
+            <span class="ask">{{ section.settings.cta }} ↗</span>
+          </a>
+        {%- endif -%}
       {%- endfor -%}
-    </div>
+    {%- endcapture -%}
+    {%- if reels != blank -%}<div class="reels">{{ reels }}</div>{%- endif -%}
+
+    {%- if show_profile -%}
+      <div class="tt-profile reveal">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@{{ tt_handle }}" data-unique-id="{{ tt_handle }}" data-embed-type="creator" style="max-width:780px;min-width:288px;">
+          <section><a target="_blank" rel="noopener" href="https://www.tiktok.com/@{{ tt_handle }}?refer=creator_embed">@{{ tt_handle }}</a></section>
+        </blockquote>
+      </div>
+      <script async src="https://www.tiktok.com/embed.js"></script>
+    {%- endif -%}
   </div>
 </section>
 {% schema %}
@@ -34,15 +67,16 @@
     { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "@giacominorichdiamonds" },
     { "type": "text", "id": "title", "label": "Titolo", "default": "From TikTok to the Rich World" },
     { "type": "text", "id": "link_label", "label": "Testo link profilo", "default": "Segui su TikTok" },
-    { "type": "text", "id": "cta", "label": "Testo sul video", "default": "Guarda su TikTok" }
+    { "type": "text", "id": "cta", "label": "Testo sul video", "default": "Guarda su TikTok" },
+    { "type": "checkbox", "id": "profile_embed", "label": "Mostra gli ultimi video del profilo TikTok", "info": "Usa il link TikTok in Impostazioni tema > Social. I video si aggiornano da soli.", "default": true }
   ],
   "blocks": [{ "type": "reel", "name": "Video", "settings": [
+    { "type": "url", "id": "url", "label": "Link al video TikTok", "info": "Incolla il link di un video (…/video/123…) per mostrarlo qui" },
     { "type": "video", "id": "video", "label": "Video verticale (caricato su Shopify)" },
     { "type": "image_picker", "id": "image", "label": "Copertina (se non c'è il video)" },
     { "type": "text", "id": "title", "label": "Titolo", "default": "Unboxing" },
-    { "type": "text", "id": "text", "label": "Testo" },
-    { "type": "url", "id": "url", "label": "Link al video TikTok" }
+    { "type": "text", "id": "text", "label": "Testo" }
   ]}],
-  "presets": [{ "name": "Video TikTok", "blocks": [{ "type": "reel" }, { "type": "reel" }, { "type": "reel" }, { "type": "reel" }] }]
+  "presets": [{ "name": "Video TikTok" }]
 }
 {% endschema %}

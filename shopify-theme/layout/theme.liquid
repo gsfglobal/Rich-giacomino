@@ -60,6 +60,12 @@
     </a>
   {%- endif -%}
 
+  {%- assign giulia_id = settings.giulia_agent_id | default: "agent_0101m84gt4tgffn8x5kwvkrfnzpp" -%}
+  {%- unless settings.giulia_enabled == false -%}
+    <elevenlabs-convai agent-id="{{ giulia_id | escape }}"></elevenlabs-convai>
+    <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+  {%- endunless -%}
+
   <script>
     window.RICH = {
       guideHome: {{ settings.guide_home | json }},

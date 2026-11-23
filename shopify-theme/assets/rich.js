@@ -74,7 +74,9 @@ function initHero(){
   const mobile=innerWidth<760;
   let renderer;
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:!mobile,alpha:false,powerPreference:"high-performance"});}catch(e){canvas.remove();return;}
-  renderer.setPixelRatio(Math.min(devicePixelRatio,mobile?1.5:2));
+  let pr=Math.min(devicePixelRatio,mobile?1.25:1.5);renderer.setPixelRatio(pr);
+  const mgr=new THREE.LoadingManager();
+  canvas.style.opacity="0";canvas.style.transition="opacity .9s ease";
   renderer.outputEncoding=THREE.sRGBEncoding;
   renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
   const scene=new THREE.Scene();
@@ -142,7 +144,7 @@ function initHero(){
   function add(obj,pos,spin){obj.position.set(...pos);obj.userData={base:pos[1],spin,ph:Math.random()*6};scene.add(obj);floats.push(obj);return obj;}
 
   // diamante gigante (lathe)
-  const diaTex=new THREE.TextureLoader().load(heroEl.dataset.diamond);diaTex.encoding=THREE.sRGBEncoding;
+  const diaTex=new THREE.TextureLoader(mgr).load(heroEl.dataset.diamond);diaTex.encoding=THREE.sRGBEncoding;
   const dia=new THREE.Mesh(new THREE.PlaneGeometry(4.6,4.6),new THREE.MeshBasicMaterial({map:diaTex,transparent:true,depthWrite:false,fog:false,toneMapped:false}));
   const gc=document.createElement("canvas");gc.width=gc.height=128;const gx=gc.getContext("2d");const gg=gx.createRadialGradient(64,64,0,64,64,64);gg.addColorStop(0,"rgba(255,236,190,.9)");gg.addColorStop(.35,"rgba(212,175,101,.35)");gg.addColorStop(1,"rgba(116,55,255,0)");gx.fillStyle=gg;gx.fillRect(0,0,128,128);
   const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(gc),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true}));glow.scale.set(10,10,1);glow.position.set(0,5.6,-22.3);scene.add(glow);
@@ -160,7 +162,7 @@ function initHero(){
   function glowTex(c1,c2){const c=document.createElement("canvas");c.width=c.height=128;const x=c.getContext("2d");const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,c1);g.addColorStop(.45,c2);g.addColorStop(1,"rgba(0,0,0,0)");x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
   function photoWatch(url,pos,h,glowA,glowB,dir,ph){
     const g=new THREE.Group();
-    const tex=new THREE.TextureLoader().load(url,t=>{const a=t.image.width/t.image.height;body.scale.set(a,1,1);shine.scale.set(a,1,1);});
+    const tex=new THREE.TextureLoader(mgr).load(url,t=>{const a=t.image.width/t.image.height;body.scale.set(a,1,1);shine.scale.set(a,1,1);});
     tex.encoding=THREE.sRGBEncoding;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();
     const geo=new THREE.PlaneGeometry(h,h);
     const body=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false,fog:false,toneMapped:false}));
@@ -179,22 +181,25 @@ function initHero(){
   if(w1)photoWatch(w1,mobile?[-1.95,5.7,-1.6]:[-3.5,3.7,-1.6],mobile?2.05:3.3,"rgba(150,190,255,.55)","rgba(116,55,255,.18)",1,0);else add(watch(goldM),[-2.6,3.8,-3.5],.8);
   if(w2)photoWatch(w2,mobile?[1.95,5.5,-1.9]:[3.5,4.0,-2.0],mobile?2.05:3.3,"rgba(255,226,160,.55)","rgba(212,175,101,.18)",-1,1.2);else add(watch(steelM),[2.7,4.2,-4.2],-.7);
 
-  // catena
+  // bracciale e borsa: foto scontornate in stile 3D (impostazioni hero) oppure oggetti 3D generici
+  const ob1=heroEl.dataset.obj1,ob2=heroEl.dataset.obj2;
+  if(ob1)photoWatch(ob1,mobile?[-2.0,7.7,-3.6]:[-7.4,5.0,-4.6],mobile?1.3:2.5,"rgba(190,225,255,.55)","rgba(120,160,255,.16)",1,.6);else{
   const chain=new THREE.Group();
   for(let i=0;i<14;i++){const l=new THREE.Mesh(new THREE.TorusGeometry(.22,.07,10,24),goldM);const a=i/13*Math.PI;l.position.set(Math.cos(a)*1.4,-Math.sin(a)*1.4,0);l.rotation.y=i%2?Math.PI/2:0;l.rotation.z=a;chain.add(l);}
   const pend=new THREE.Mesh(new THREE.OctahedronGeometry(.32),iceM);pend.position.y=-1.75;chain.add(pend);
-  add(chain,[-3.6,6.2,-7],.4);
-
-  // borsa generica
+  add(chain,[-3.6,6.2,-7],.4);}
+  if(ob2)photoWatch(ob2,mobile?[2.0,7.6,-3.6]:[7.4,5.3,-4.8],mobile?1.35:2.6,"rgba(255,214,150,.5)","rgba(140,80,40,.16)",-1,1.8);else{
   const bag=new THREE.Group();
   const bb=new THREE.Mesh(new THREE.BoxGeometry(1.4,1,.55),new THREE.MeshStandardMaterial({color:0x5a3a24,roughness:.5,metalness:.1}));bag.add(bb);
   const hd=new THREE.Mesh(new THREE.TorusGeometry(.42,.05,10,32,Math.PI),goldM);hd.position.y=.5;bag.add(hd);
   const lk=new THREE.Mesh(new THREE.BoxGeometry(.24,.16,.05),goldM);lk.position.set(0,.18,.3);bag.add(lk);
-  add(bag,[3.8,6,-8],.6);
+  add(bag,[3.8,6,-8],.6);}
 
   // anello
+  const ob3=heroEl.dataset.obj3;
+  if(ob3)photoWatch(ob3,mobile?[1.75,3.0,-1.2]:[2.35,3.35,-2.2],mobile?.85:1.45,"rgba(210,235,255,.6)","rgba(140,180,255,.18)",-1,2.4);else{
   const ring=new THREE.Group();ring.add(new THREE.Mesh(new THREE.TorusGeometry(.45,.09,16,48),steelM));const rs=new THREE.Mesh(new THREE.OctahedronGeometry(.22),iceM);rs.position.y=.55;ring.add(rs);
-  add(ring,[1.6,2.4,-2.2],1.1);
+  add(ring,[1.6,2.4,-2.2],1.1);}
 
   // scintille
   const N=mobile?260:520,sg=new THREE.BufferGeometry(),sp=new Float32Array(N*3);
@@ -207,28 +212,30 @@ function initHero(){
 
   let mx=0,my=0;addEventListener("pointermove",e=>{mx=e.clientX/innerWidth-.5;my=e.clientY/innerHeight-.5;},{passive:true});
   const hero=$("#hero"),charEl=$("#char");
-  let running=true,t0=performance.now();
-  const vis=new IntersectionObserver(([e])=>{const was=running;running=e.isIntersecting;if(running&&!was){size();loop();}},{threshold:0});running=false;vis.observe(hero);
+  let running=false,ready=false,inView=true,t0=performance.now(),lastP=-1,fN=0,fT=0,fPrev=0;
+  const vis=new IntersectionObserver(([e])=>{inView=e.isIntersecting;if(inView&&ready&&!running){running=true;size();requestAnimationFrame(loop);}else if(!inView)running=false;},{threshold:0});vis.observe(hero);
+  function start(){if(ready)return;ready=true;size();{const p=prog();cam.position.set(0,2.4+p*1.6,9-p*20);cam.lookAt(0,3.6+p*.8,-12-p*20);}try{renderer.compile(scene,cam);}catch(e){}renderer.render(scene,cam);requestAnimationFrame(()=>{canvas.style.opacity="1";});t0=performance.now();if(inView&&!running){running=true;requestAnimationFrame(loop);}}
+  mgr.onLoad=start;setTimeout(start,4500);
   function prog(){const r=hero.getBoundingClientRect();return Math.min(1,Math.max(0,-r.top/(r.height-innerHeight)));}
-  function loop(){
+  function loop(now){
     if(!running)return;
+    if(fPrev){const dt=now-fPrev;if(dt<200){fT+=dt;fN++;}if(fN===90){if(fT/fN>24&&pr>1){pr=Math.max(1,pr-.25);renderer.setPixelRatio(pr);size();}fN=0;fT=0;}}fPrev=now;
     const t=(performance.now()-t0)/1000,p=prog();
     // camera: avanza lungo la strada verso la boutique e sale leggermente
     cam.position.set(mx*1.2,2.4+p*1.6-my*.6,9-p*20);
     cam.lookAt(0,3.6+p*.8,-12-p*20);
-    floats.forEach((o,i)=>{o.rotation.y+=reduce?0:o.userData.spin*.012;o.position.y=o.userData.base+Math.sin(t*1.1+o.userData.ph)*.18;});
+    floats.forEach((o,i)=>{o.rotation.y=reduce?0:o.userData.spin*.72*t;o.position.y=o.userData.base+Math.sin(t*1.1+o.userData.ph)*.18;});
     photoWatches.forEach(g=>{const u=g.userData;if(!reduce){g.rotation.y=Math.sin(t*.55+u.wph)*.38*u.dir+(mx*.25);g.rotation.z=Math.sin(t*.4+u.wph)*.05*u.dir;g.rotation.x=-my*.12;}u.shine.uniforms.t.value=t;u.glow.material.opacity=.6+Math.sin(t*1.3+u.wph)*.2;});
     dia.rotation.y=reduce?0:Math.sin(t*.7)*.3;dia.rotation.z=Math.sin(t*.5)*.04;const ds=1+Math.sin(t*1.6)*.025;dia.scale.set(ds,ds,1);glow.material.opacity=.75+Math.sin(t*2.2)*.25;
     sparks.rotation.y=Math.sin(t*.05)*.05;
-    charEl.style.opacity=String(1-p*1.8);charEl.style.transform=`translateX(-50%) scale(${1-p*.3})`;
+    if(p!==lastP){lastP=p;charEl.style.opacity=String(1-p*1.8);charEl.style.transform=`translateX(-50%) scale(${1-p*.3})`;}
     renderer.render(scene,cam);
     requestAnimationFrame(loop);
   }
-  loop();
 }
 
 if(heroEl){
   const go=()=>{if(window.THREE){initHero();return;}const sc=document.createElement("script");sc.src=heroEl.dataset.three;sc.onload=initHero;sc.onerror=()=>{const c=$("#scene");c&&c.remove();};document.head.appendChild(sc);};
-  if(document.readyState==="complete")go();else addEventListener("load",go);
+  if(document.readyState!=="loading")go();else addEventListener("DOMContentLoaded",go);
 }
 })();

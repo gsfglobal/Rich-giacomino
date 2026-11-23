@@ -1,0 +1,93 @@
+{%- liquid
+  assign tabs_count = 0
+  for block in section.blocks
+    if block.settings.collection != blank
+      assign tabs_count = tabs_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if tabs_count > 0 or request.design_mode -%}
+<section class="s cat-home" id="catalogo-{{ section.id }}">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2>{{ section.settings.title }}</h2>
+      </div>
+      {%- if section.settings.link_label != blank -%}<a href="{{ routes.all_products_collection_url }}" class="btn btn-ghost">{{ section.settings.link_label }}</a>{%- endif -%}
+    </div>
+
+    <div class="cat-tabs reveal" role="tablist" aria-label="{{ section.settings.title | escape }}">
+      {%- assign first = true -%}
+      {%- for block in section.blocks -%}
+        {%- assign c = block.settings.collection -%}
+        {%- if c != blank -%}
+          <button type="button" class="cat-tab{% if first %} on{% endif %}" role="tab" id="tab-{{ block.id }}" aria-controls="pan-{{ block.id }}" aria-selected="{% if first %}true{% else %}false{% endif %}" tabindex="{% if first %}0{% else %}-1{% endif %}" {{ block.shopify_attributes }}>
+            {{ block.settings.label | default: c.title }}<span class="n">{{ c.products_count }}</span>
+          </button>
+          {%- assign first = false -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- assign first = true -%}
+    {%- for block in section.blocks -%}
+      {%- assign c = block.settings.collection -%}
+      {%- if c != blank -%}
+        <div class="cat-pan" role="tabpanel" id="pan-{{ block.id }}" aria-labelledby="tab-{{ block.id }}"{% unless first %} hidden{% endunless %}>
+          {%- if c.products_count > 0 -%}
+            <div class="grid">
+              {%- for product in c.products limit: section.settings.limit -%}{% render 'product-card', product: product %}{%- endfor -%}
+            </div>
+            <div class="cat-more"><a href="{{ c.url }}" class="btn btn-gold">{{ section.settings.more_label }} {{ block.settings.label | default: c.title }} →</a></div>
+          {%- else -%}
+            <p class="cat-empty">{{ section.settings.empty_text }}</p>
+          {%- endif -%}
+        </div>
+        {%- assign first = false -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% javascript %}
+(function(){
+  function init(root){
+    var tabs=[].slice.call(root.querySelectorAll('.cat-tab'));
+    function sel(t,focus){
+      tabs.forEach(function(x){var on=x===t;x.classList.toggle('on',on);x.setAttribute('aria-selected',on?'true':'false');x.tabIndex=on?0:-1;var p=document.getElementById(x.getAttribute('aria-controls'));if(p){p.hidden=!on;if(on)p.querySelectorAll('.reveal').forEach(function(r){r.classList.add('in');});}});
+      if(focus)t.focus();
+    }
+    tabs.forEach(function(t,i){
+      t.addEventListener('click',function(){sel(t);});
+      t.addEventListener('keydown',function(e){var k=e.key,j=-1;if(k==='ArrowRight')j=(i+1)%tabs.length;else if(k==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;else if(k==='Home')j=0;else if(k==='End')j=tabs.length-1;if(j>-1){e.preventDefault();sel(tabs[j],true);}});
+    });
+  }
+  function all(){document.querySelectorAll('.cat-home').forEach(function(r){if(!r.dataset.ready){r.dataset.ready='1';init(r);}});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',all);else all();
+  document.addEventListener('shopify:section:load',all);
+})();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Catalogo con menu",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Il catalogo" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Scegli la tua boutique" },
+    { "type": "text", "id": "link_label", "label": "Testo link catalogo completo", "default": "Tutto il catalogo" },
+    { "type": "range", "id": "limit", "label": "Pezzi per categoria", "min": 4, "max": 16, "step": 4, "default": 8 },
+    { "type": "text", "id": "more_label", "label": "Testo pulsante sotto la griglia", "default": "Vedi tutti:" },
+    { "type": "text", "id": "empty_text", "label": "Testo se la categoria è vuota", "default": "Nuovi pezzi in arrivo. Chiedi su WhatsApp cosa è disponibile." }
+  ],
+  "blocks": [
+    { "type": "tab", "name": "Categoria", "settings": [
+      { "type": "collection", "id": "collection", "label": "Collezione" },
+      { "type": "text", "id": "label", "label": "Nome nel menu (vuoto = nome collezione)" }
+    ]}
+  ],
+  "presets": [{ "name": "Catalogo con menu" }]
+}
+{% endschema %}
