@@ -1,8 +1,17 @@
+{%- if page.content contains '[DA COMPLETARE]' and section.settings.draft_notice -%}
+<div class="wrap"><div class="note draft-note" role="note">{{ 'pages.draft' | t }}</div></div>
+{%- endif -%}
 {%- if page.content != blank -%}
-<section class="s" style="padding-top:50px">
-  <div class="wrap rte" style="max-width:760px">{{ page.content }}</div>
+<section class="s" style="padding-top:{% if section.settings.compact %}30px{% else %}50px{% endif %}">
+  <div class="wrap rte legal-rte" style="max-width:820px">{{ page.content }}</div>
 </section>
 {%- endif -%}
 {% schema %}
-{ "name": "Contenuto pagina", "settings": [] }
+{
+  "name": "Contenuto pagina",
+  "settings": [
+    { "type": "checkbox", "id": "draft_notice", "label": "Avviso 'bozza' se il testo contiene [DA COMPLETARE]", "default": true },
+    { "type": "checkbox", "id": "compact", "label": "Meno spazio sopra", "default": false }
+  ]
+}
 {% endschema %}

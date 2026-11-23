@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "Contatti",
+        "text": "WhatsApp, telefono o modulo: rispondiamo personalmente."
+      }
+    },
+    "contact": {
+      "type": "contact",
+      "settings": {}
+    },
+    "delivery": {
+      "type": "luxury-delivery",
+      "settings": {
+        "compact": true
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "contact",
+    "delivery"
+  ]
+}

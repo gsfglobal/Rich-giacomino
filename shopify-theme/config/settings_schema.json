@@ -2,7 +2,7 @@
   {
     "name": "theme_info",
     "theme_name": "Rich World",
-    "theme_version": "1.0.0",
+    "theme_version": "1.1.0",
     "theme_author": "Peppe Veccia",
     "theme_documentation_url": "https://gsfglobal.github.io/Rich-giacomino/",
     "theme_support_url": "https://gsfglobal.github.io/Rich-giacomino/"
@@ -57,6 +57,62 @@
         "label": "Nascondi tutti i prezzi (PRICE ON REQUEST)",
         "default": false,
         "info": "Anche senza questa opzione, un prodotto a 0 € o con il tag price-on-request mostra PRICE ON REQUEST."
+      }
+    ]
+  },
+  {
+    "name": "Spedizioni",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Questi dati compaiono nella sezione Luxury Delivery e nel footer. Finché il servizio non è confermato si vede solo il testo neutro."
+      },
+      {
+        "type": "checkbox",
+        "id": "courier_confirmed",
+        "label": "Servizio di spedizione confermato",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "delivery_neutral",
+        "label": "Testo neutro (servizio non confermato)",
+        "default": "Informazioni su spedizioni e consegne disponibili su richiesta."
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_description",
+        "label": "Descrizione del servizio (quando confermato)",
+        "default": "Le spedizioni vengono effettuate tramite corriere specializzato nella gestione di beni di valore."
+      },
+      {
+        "type": "text",
+        "id": "courier_name",
+        "label": "Nome del corriere",
+        "info": "Lasciare vuoto finché non è comunicato."
+      },
+      {
+        "type": "text",
+        "id": "delivery_area",
+        "label": "Area servita",
+        "default": "Tutta Italia"
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_tracking",
+        "label": "Tracciabilità",
+        "info": "Solo se il servizio la prevede davvero."
+      },
+      {
+        "type": "textarea",
+        "id": "delivery_insurance",
+        "label": "Assicurazione",
+        "info": "Solo se confermata, con le condizioni reali."
+      },
+      {
+        "type": "url",
+        "id": "delivery_page",
+        "label": "Pagina Spedizioni e consegne"
       }
     ]
   },

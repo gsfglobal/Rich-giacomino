@@ -1,44 +1,63 @@
 {%- capture wa_text -%}{{ 'whatsapp.generic' | t: shop: shop.name }}{%- endcapture -%}
+{%- assign s = section.settings -%}
 <footer>
   <div class="wrap">
     <div class="fgrid">
-      <div>
-        <a href="{{ routes.root_url }}" class="logo" style="margin-bottom:12px"><svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg><span>{{ section.settings.title }}<small>{{ section.settings.subtitle }}</small></span></a>
-        {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
-        {%- if settings.whatsapp_number != blank -%}
-          <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" style="margin-top:16px" target="_blank" rel="noopener">{% render 'icon-wa' %}WhatsApp</a>
-        {%- endif -%}
-      </div>
-      <div>
-        <h2 class="fh">{{ section.settings.menu_title }}</h2>
-        {%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
-      </div>
-      <div>
-        <h2 class="fh">{{ section.settings.info_title }}</h2>
-        {%- for link in section.settings.menu2.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
-        {%- if settings.tiktok_url != blank -%}<a href="{{ settings.tiktok_url }}" target="_blank" rel="noopener">TikTok ↗</a>{%- endif -%}
-        {%- if settings.instagram_url != blank -%}<a href="{{ settings.instagram_url }}" target="_blank" rel="noopener">Instagram ↗</a>{%- endif -%}
+      <div class="fcol-brand">
+        <a href="{{ routes.root_url }}" class="logo" style="margin-bottom:14px">
+          {%- if s.logo != blank -%}
+            {{ s.logo | image_url: width: 240 | image_tag: alt: shop.name, style: 'height:36px;width:auto' }}
+          {%- else -%}
+            <svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg><span>{{ s.title }}<small>{{ s.subtitle }}</small></span>
+          {%- endif -%}
+        </a>
+        {%- if s.text != blank -%}<p>{{ s.text }}</p>{%- endif -%}
         {%- if settings.address != blank -%}<p>{{ settings.address }}</p>{%- endif -%}
         {%- if settings.phone != blank -%}<a href="tel:{{ settings.phone | remove: ' ' }}">{{ settings.phone }}</a>{%- endif -%}
-        {%- if section.settings.shipping != blank -%}<p>{{ section.settings.shipping }}</p>{%- endif -%}
+        <div class="fsocial">
+          {%- if settings.whatsapp_number != blank -%}<a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}WhatsApp</a>{%- endif -%}
+          {%- if settings.tiktok_url != blank -%}<a href="{{ settings.tiktok_url }}" class="fpill" target="_blank" rel="noopener">TikTok ↗</a>{%- endif -%}
+          {%- if settings.instagram_url != blank -%}<a href="{{ settings.instagram_url }}" class="fpill" target="_blank" rel="noopener">Instagram ↗</a>{%- endif -%}
+        </div>
+      </div>
+      <div>
+        <h2 class="fh">{{ s.explore_title }}</h2>
+        {%- for link in s.explore_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+      <div>
+        <h2 class="fh">{{ s.brands_title }}</h2>
+        {%- if s.brands_link != blank -%}<a href="{{ s.brands_link }}" class="fstrong">{{ s.brands_link_label }} →</a>{%- endif -%}
+        {%- for link in s.brands_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+      <div>
+        <h2 class="fh">{{ s.care_title }}</h2>
+        {%- for link in s.care_menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+        <p class="fship">{% render 'delivery-text' %}</p>
       </div>
     </div>
-    <div class="fine">© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.legal != blank %} · {{ section.settings.legal }}{% endif %}</div>
+    <div class="fine">© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if s.legal != blank %} · {{ s.legal }}{% endif %}</div>
   </div>
 </footer>
 {% schema %}
 {
   "name": "Footer",
   "settings": [
+    { "type": "header", "content": "Colonna Richgiacomino" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (facoltativo)" },
     { "type": "text", "id": "title", "label": "Nome", "default": "RICHGIACOMINO" },
     { "type": "text", "id": "subtitle", "label": "Sottotitolo", "default": "BEE DIAMONDS" },
-    { "type": "textarea", "id": "text", "label": "Testo", "default": "Orologi di lusso, borse firmate, diamanti e pezzi esclusivi. Richieste e appuntamenti su WhatsApp." },
-    { "type": "text", "id": "menu_title", "label": "Titolo menu 1", "default": "Boutique" },
-    { "type": "link_list", "id": "menu", "label": "Menu 1", "default": "main-menu" },
-    { "type": "text", "id": "info_title", "label": "Titolo colonna info", "default": "Info" },
-    { "type": "link_list", "id": "menu2", "label": "Menu 2", "default": "footer" },
-    { "type": "text", "id": "shipping", "label": "Spedizioni", "default": "Spedizioni in tutta Italia" },
-    { "type": "textarea", "id": "legal", "label": "Note legali", "default": "I marchi citati appartengono ai rispettivi proprietari; Bee Diamonds non è rivenditore autorizzato." }
+    { "type": "textarea", "id": "text", "label": "Presentazione", "default": "Orologi, gioielli, borse e accessori di lusso. Richieste e appuntamenti su WhatsApp." },
+    { "type": "header", "content": "Colonne menu" },
+    { "type": "text", "id": "explore_title", "label": "Titolo colonna 2", "default": "Explore" },
+    { "type": "link_list", "id": "explore_menu", "label": "Menu colonna 2", "default": "footer" },
+    { "type": "text", "id": "brands_title", "label": "Titolo colonna 3", "default": "Brands" },
+    { "type": "url", "id": "brands_link", "label": "Link Shop by Brand" },
+    { "type": "text", "id": "brands_link_label", "label": "Testo link Shop by Brand", "default": "Shop by Brand" },
+    { "type": "link_list", "id": "brands_menu", "label": "Menu colonna 3" },
+    { "type": "text", "id": "care_title", "label": "Titolo colonna 4", "default": "Customer Care" },
+    { "type": "link_list", "id": "care_menu", "label": "Menu colonna 4" },
+    { "type": "header", "content": "Note" },
+    { "type": "textarea", "id": "legal", "label": "Note legali", "default": "I marchi citati appartengono ai rispettivi proprietari; Bee Diamonds non è rivenditore autorizzato. Ragione sociale e P.IVA: [DA COMPLETARE]" }
   ]
 }
 {% endschema %}

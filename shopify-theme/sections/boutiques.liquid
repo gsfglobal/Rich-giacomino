@@ -4,7 +4,7 @@
       <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div>
       {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
     </div>
-    <div class="map scroller">
+    <div class="map scroller" data-count="{{ section.blocks.size }}">
       {%- for block in section.blocks -%}{% render 'shop-card', block: block %}{%- endfor -%}
     </div>
   </div>

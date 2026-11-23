@@ -59,9 +59,10 @@
         "b0": {
           "type": "boutique",
           "settings": {
+            "collection": "orologi",
             "title": "Watch District",
             "number": "01",
-            "text": "Orologi premium dei marchi realmente disponibili.",
+            "text": "Orologi di lusso, pezzi iconici e da collezione.",
             "neon": "#D4AF65",
             "art": "watch",
             "art_color": "gold"
@@ -70,54 +71,35 @@
         "b1": {
           "type": "boutique",
           "settings": {
-            "title": "Designer Bags",
-            "number": "02",
-            "text": "Borse firmate e accessori fashion.",
-            "neon": "#F8F8FA",
-            "art": "bag",
-            "art_color": "leather"
-          }
-        },
-        "b2": {
-          "type": "boutique",
-          "settings": {
+            "collection": "gioielli",
             "title": "Diamond District",
-            "number": "03",
-            "text": "Diamanti, collane, bracciali, anelli.",
+            "number": "02",
+            "text": "Diamanti, gioielli e creazioni esclusive.",
             "neon": "#39D8FF",
             "art": "diamond",
             "art_color": "ice"
           }
         },
+        "b2": {
+          "type": "boutique",
+          "settings": {
+            "collection": "borse",
+            "title": "Designer Bags",
+            "number": "03",
+            "text": "Borse firmate, pezzi ricercati e vintage.",
+            "neon": "#F8F8FA",
+            "art": "bag",
+            "art_color": "leather"
+          }
+        },
         "b3": {
           "type": "boutique",
           "settings": {
-            "title": "Iced Out",
-            "number": "04",
-            "text": "Cuban link, tennis, gioielli hip-hop.",
-            "neon": "#7437FF",
-            "art": "chain",
-            "art_color": "violet"
-          }
-        },
-        "b4": {
-          "type": "boutique",
-          "settings": {
-            "title": "Exclusive Drops",
-            "number": "05",
-            "text": "Nuovi arrivi e pezzi da collezione.",
-            "neon": "#D4AF65",
-            "art": "vault",
-            "art_color": "gold"
-          }
-        },
-        "b5": {
-          "type": "boutique",
-          "settings": {
+            "collection": "accessori",
             "title": "Luxury Accessories",
-            "number": "06",
-            "text": "Altri pezzi esclusivi del catalogo.",
-            "neon": "#39D8FF",
+            "number": "04",
+            "text": "Accessori di lusso e dettagli esclusivi.",
+            "neon": "#7437FF",
             "art": "shades",
             "art_color": "gold"
           }
@@ -127,9 +109,7 @@
         "b0",
         "b1",
         "b2",
-        "b3",
-        "b4",
-        "b5"
+        "b3"
       ],
       "settings": {}
     },
@@ -214,14 +194,100 @@
         "link_label": "Come funziona",
         "link": "/pages/fiducia"
       }
+    },
+    "brands": {
+      "type": "shop-by-brand",
+      "blocks": {
+        "br0": {
+          "type": "brand",
+          "settings": {
+            "name": "Rolex",
+            "collection": "rolex"
+          }
+        },
+        "br1": {
+          "type": "brand",
+          "settings": {
+            "name": "Audemars Piguet",
+            "collection": "audemars-piguet"
+          }
+        },
+        "br2": {
+          "type": "brand",
+          "settings": {
+            "name": "Cartier",
+            "collection": "cartier"
+          }
+        },
+        "br3": {
+          "type": "brand",
+          "settings": {
+            "name": "Patek Philippe",
+            "collection": "patek-philippe"
+          }
+        },
+        "br4": {
+          "type": "brand",
+          "settings": {
+            "name": "Swatch",
+            "collection": "swatch"
+          }
+        },
+        "br5": {
+          "type": "brand",
+          "settings": {
+            "name": "Hermès",
+            "collection": "hermes"
+          }
+        },
+        "br6": {
+          "type": "brand",
+          "settings": {
+            "name": "Louis Vuitton",
+            "collection": "louis-vuitton"
+          }
+        },
+        "br7": {
+          "type": "brand",
+          "settings": {
+            "name": "Gucci",
+            "collection": "gucci"
+          }
+        },
+        "br8": {
+          "type": "brand",
+          "settings": {
+            "name": "Prada",
+            "collection": "prada"
+          }
+        }
+      },
+      "block_order": [
+        "br0",
+        "br1",
+        "br2",
+        "br3",
+        "br4",
+        "br5",
+        "br6",
+        "br7",
+        "br8"
+      ],
+      "settings": {}
+    },
+    "delivery": {
+      "type": "luxury-delivery",
+      "settings": {}
     }
   },
   "order": [
     "hero",
     "marquee",
     "boutiques",
+    "brands",
     "featured",
     "vip",
+    "delivery",
     "reels",
     "trust"
   ]

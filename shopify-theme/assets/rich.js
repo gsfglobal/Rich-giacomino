@@ -17,6 +17,24 @@ if(drawer&&burger){
   $("#drawerX").addEventListener("click",()=>{drawer.classList.remove("open");burger.setAttribute("aria-expanded","false");});
   addEventListener("keydown",e=>{if(e.key==="Escape")drawer.classList.remove("open");});
 }
+/* dropdown / mega menu */
+const dds=[...document.querySelectorAll(".has-dd")];
+const closeAll=(except)=>dds.forEach(li=>{if(li!==except){li.classList.remove("open");li.querySelector(".dd-toggle").setAttribute("aria-expanded","false");}});
+dds.forEach(li=>{
+  const btn=li.querySelector(".dd-toggle");
+  btn.addEventListener("click",e=>{e.stopPropagation();const open=!li.classList.contains("open");closeAll(li);li.classList.toggle("open",open);btn.setAttribute("aria-expanded",String(open));});
+  li.addEventListener("keydown",e=>{
+    const links=[...li.querySelectorAll(".dd a")];const i=links.indexOf(document.activeElement);
+    if(e.key==="Escape"){li.classList.remove("open");btn.setAttribute("aria-expanded","false");btn.focus();}
+    else if(e.key==="ArrowDown"){e.preventDefault();const t=links[i+1]||links[0];if(!li.classList.contains("open")){closeAll(li);li.classList.add("open");btn.setAttribute("aria-expanded","true");setTimeout(()=>t&&t.focus(),40);}else t&&t.focus();}
+    else if(e.key==="ArrowUp"&&i>-1){e.preventDefault();(links[i-1]||btn).focus();}
+  });
+  li.addEventListener("focusout",e=>{if(!li.contains(e.relatedTarget)){li.classList.remove("open");btn.setAttribute("aria-expanded","false");}});
+});
+document.addEventListener("click",()=>closeAll());
+addEventListener("keydown",e=>{if(e.key==="Escape")closeAll();});
+/* brand cards light follows pointer */
+document.querySelectorAll(".brand-card").forEach(c=>c.addEventListener("pointermove",e=>{const r=c.getBoundingClientRect();c.style.setProperty("--mx",((e.clientX-r.left)/r.width*100)+"%");c.style.setProperty("--my",((e.clientY-r.top)/r.height*100)+"%");}));
 /* reveal */
 const els=document.querySelectorAll(".reveal");
 if("IntersectionObserver" in window){

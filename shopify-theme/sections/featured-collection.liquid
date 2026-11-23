@@ -1,4 +1,11 @@
 {%- assign coll = section.settings.collection -%}
+{%- liquid
+  assign show = request.design_mode
+  if coll != blank and coll.products_count > 0
+    assign show = true
+  endif
+-%}
+{%- if show -%}
 <section class="s" style="padding-top:20px">
   <div class="wrap">
     <div class="s-head reveal">
@@ -8,7 +15,7 @@
     <div class="grid">
       {%- if coll != blank and coll.products_count > 0 -%}
         {%- for product in coll.products limit: section.settings.limit -%}{% render 'product-card', product: product %}{%- endfor -%}
-      {%- else -%}
+      {%- elsif request.design_mode -%}
         {% render 'product-card', placeholder_type: 'watch', placeholder_color: 'steel' %}
         {% render 'product-card', placeholder_type: 'diamond' %}
         {% render 'product-card', placeholder_type: 'chain', placeholder_color: 'gold' %}
@@ -17,6 +24,7 @@
     </div>
   </div>
 </section>
+{%- endif -%}
 {% schema %}
 {
   "name": "Pezzi in evidenza",

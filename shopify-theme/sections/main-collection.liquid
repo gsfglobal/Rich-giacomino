@@ -9,6 +9,9 @@
 -%}
 <div class="dhero">
   <div class="amb" style="background:radial-gradient(circle at 75% 20%,color-mix(in srgb,{{ neon }} 40%,transparent),transparent 55%),radial-gradient(circle at 0% 100%,color-mix(in srgb,var(--violet) 22%,transparent),transparent 50%)"></div>
+  {%- if section.settings.mode == 'brand' -%}
+  <div class="brand-ghost" aria-hidden="true">{{ collection.title }}</div>
+  {%- else -%}
   <div class="art" aria-hidden="true">
     {%- if collection.image -%}
       {{ collection.image | image_url: width: 900 | image_tag: loading: 'eager', alt: '' }}
@@ -16,10 +19,15 @@
       {% render 'art', type: section.settings.art, color: section.settings.art_color %}
     {%- endif -%}
   </div>
+  {%- endif -%}
   <div class="wrap">
     <p class="crumbs"><a href="{{ routes.root_url }}">{{ shop.name }}</a> / {{ collection.title }}</p>
     <p class="eyebrow" style="margin-top:22px">{{ section.settings.eyebrow }}</p>
-    <h1>{% if first_words != blank %}{{ first_words }} {% endif %}<span class="gold">{{ last }}</span></h1>
+    {%- if section.settings.mode == 'brand' -%}
+      <h1 class="brand-h1"><span class="gold">{{ collection.title }}</span></h1>
+    {%- else -%}
+      <h1>{% if first_words != blank %}{{ first_words }} {% endif %}<span class="gold">{{ last }}</span></h1>
+    {%- endif -%}
     {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
       {%- if settings.whatsapp_number != blank -%}<a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ 'sections.ask' | t }}</a>{%- endif -%}
@@ -31,7 +39,7 @@
 <section class="s" style="padding-top:30px">
   <div class="wrap">
     {%- paginate collection.products by section.settings.per_page -%}
-      {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+      {%- if section.settings.show_filters and collection.products_count > 0 -%}
         <form class="filters" id="FacetForm" action="{{ collection.url }}" method="get" role="search" aria-label="{{ 'collections.filters' | t }}">
           {%- for filter in collection.filters -%}
             {%- case filter.type -%}
@@ -50,7 +58,13 @@
                 <input id="pmax" type="number" min="0" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" placeholder="{{ 'collections.price_max' | t }}" data-autosubmit>
             {%- endcase -%}
           {%- endfor -%}
-          <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by }}">
+          <label class="sr" for="SortBy">{{ 'collections.sort' | t }}</label>
+          <select id="SortBy" name="sort_by" data-autosubmit>
+            {%- assign current_sort = collection.sort_by | default: collection.default_sort_by -%}
+            {%- for option in collection.sort_options -%}
+              <option value="{{ option.value | escape }}"{% if option.value == current_sort %} selected{% endif %}>{{ 'collections.sort' | t }}: {{ option.name }}</option>
+            {%- endfor -%}
+          </select>
           <noscript><button class="btn btn-ghost" type="submit">{{ 'collections.apply' | t }}</button></noscript>
           <span class="count">{{ 'collections.count' | t: count: collection.products_count }}</span>
         </form>
@@ -60,11 +74,17 @@
         {%- for product in collection.products -%}
           {% render 'product-card', product: product %}
         {%- else -%}
-          <div class="empty" style="grid-column:1/-1">
-            {{ 'collections.empty' | t }}
+          <div class="empty empty-lux" style="grid-column:1/-1">
+            <div class="empty-gem" aria-hidden="true">{% render 'art', type: 'diamond' %}</div>
+            {%- if collection.all_products_count == 0 -%}
+              <p class="empty-title">{{ 'collections.empty_title' | t: title: collection.title }}</p>
+              <p>{{ 'collections.empty_coming' | t }}</p>
+            {%- else -%}
+              <p>{{ 'collections.empty' | t }}</p>
+            {%- endif -%}
             {%- if settings.whatsapp_number != blank -%}
-              {%- capture wa_empty -%}{{ 'whatsapp.looking' | t }}{%- endcapture -%}
-              <a href="{% render 'wa-url', text: wa_empty %}" target="_blank" rel="noopener" style="color:var(--gold)">{{ 'sections.ask' | t }} →</a>
+              {%- capture wa_empty -%}{{ 'whatsapp.looking_in' | t: collection: collection.title }}{%- endcapture -%}
+              <a href="{% render 'wa-url', text: wa_empty %}" target="_blank" rel="noopener" class="btn btn-wa" style="margin-top:18px">{% render 'icon-wa' %}{{ 'sections.ask' | t }}</a>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -86,6 +106,7 @@
 {
   "name": "Pagina boutique",
   "settings": [
+    { "type": "select", "id": "mode", "label": "Stile intestazione", "default": "category", "options": [ { "value": "category", "label": "Boutique (illustrazione)" }, { "value": "brand", "label": "Marchio (nome tipografico)" } ] },
     { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Boutique" },
     { "type": "color", "id": "neon", "label": "Colore luce (se la collezione non ha il metafield custom.colore_neon)", "default": "#D4AF65" },
     { "type": "select", "id": "art", "label": "Illustrazione (se la collezione non ha immagine)", "default": "diamond", "options": [

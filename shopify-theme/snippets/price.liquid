@@ -1,7 +1,7 @@
 {%- comment -%} Param: product. Shows the price only when it is set and not hidden {%- endcomment -%}
 {%- liquid
   assign on_request = false
-  if settings.hide_prices or product.price == 0 or product.tags contains 'price-on-request'
+  if settings.hide_prices or product.price == 0 or product.tags contains 'price-on-request' or product.metafields.custom.prezzo_su_richiesta.value == true
     assign on_request = true
   endif
 -%}

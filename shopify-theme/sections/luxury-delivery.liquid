@@ -1,0 +1,50 @@
+{%- assign s = section.settings -%}
+<section class="s delivery-s"{% if s.compact %} style="padding-top:20px"{% endif %}>
+  <div class="wrap">
+    <div class="delivery reveal">
+      <div class="delivery-ic" aria-hidden="true">
+        <svg viewBox="0 0 64 64" focusable="false"><path d="M6 18h32v24H6z" fill="none" stroke="url(#gGold)" stroke-width="2.5" stroke-linejoin="round"/><path d="M38 26h11l8 9v7H38z" fill="none" stroke="url(#gGold)" stroke-width="2.5" stroke-linejoin="round"/><circle cx="17" cy="45" r="5" fill="#08090D" stroke="url(#gGold)" stroke-width="2.5"/><circle cx="48" cy="45" r="5" fill="#08090D" stroke="url(#gGold)" stroke-width="2.5"/><path d="M16 25l4 4-4 4M12 29h8" stroke="#39D8FF" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M26 22l3 5h-6Z" fill="url(#gIce)"/></svg>
+      </div>
+      <div class="delivery-copy">
+        <p class="eyebrow">{{ s.eyebrow }}</p>
+        <h2>{{ s.title }}</h2>
+        {%- if settings.courier_confirmed -%}
+          <p class="delivery-lead">{{ settings.delivery_description }}</p>
+          <dl class="delivery-list">
+            {%- if settings.courier_name != blank -%}<div><dt>{{ 'delivery.courier' | t }}</dt><dd>{{ settings.courier_name }}</dd></div>{%- endif -%}
+            {%- if settings.delivery_area != blank -%}<div><dt>{{ 'delivery.area' | t }}</dt><dd>{{ settings.delivery_area }}</dd></div>{%- endif -%}
+            {%- if settings.delivery_tracking != blank -%}<div><dt>{{ 'delivery.tracking' | t }}</dt><dd>{{ settings.delivery_tracking }}</dd></div>{%- endif -%}
+            {%- if settings.delivery_insurance != blank -%}<div><dt>{{ 'delivery.insurance' | t }}</dt><dd>{{ settings.delivery_insurance }}</dd></div>{%- endif -%}
+          </dl>
+        {%- else -%}
+          <p class="delivery-lead">{{ settings.delivery_neutral }}</p>
+          {%- if settings.delivery_area != blank and s.show_area -%}
+            <dl class="delivery-list"><div><dt>{{ 'delivery.area' | t }}</dt><dd>{{ settings.delivery_area }}</dd></div></dl>
+          {%- endif -%}
+        {%- endif -%}
+        <div class="delivery-ctas">
+          {%- if settings.delivery_page != blank -%}<a href="{{ settings.delivery_page }}" class="btn btn-ghost">{{ s.link_label }}</a>{%- endif -%}
+          {%- if settings.whatsapp_number != blank -%}
+            {%- capture wa_text -%}{{ 'whatsapp.delivery' | t }}{%- endcapture -%}
+            <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ s.wa_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Luxury Delivery",
+  "settings": [
+    { "type": "paragraph", "content": "Corriere, area, tracciabilità e assicurazione si impostano in Impostazioni tema → Spedizioni." },
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Spedizioni di valore" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Luxury Delivery" },
+    { "type": "checkbox", "id": "show_area", "label": "Mostra l'area servita anche prima della conferma", "default": true },
+    { "type": "text", "id": "link_label", "label": "Testo link pagina spedizioni", "default": "Spedizioni e consegne" },
+    { "type": "text", "id": "wa_label", "label": "Pulsante WhatsApp", "default": "Chiedi info spedizione" },
+    { "type": "checkbox", "id": "compact", "label": "Meno spazio sopra", "default": true }
+  ],
+  "presets": [{ "name": "Luxury Delivery" }]
+}
+{% endschema %}

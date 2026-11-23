@@ -1,3 +1,4 @@
+{%- assign menu = section.settings.menu -%}
 <header class="top{% if template.name != 'index' %} solid{% endif %}" id="top" data-solid="{% if template.name != 'index' %}1{% endif %}">
   <div class="wrap bar">
     <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}, home">
@@ -9,22 +10,54 @@
       {%- endif -%}
     </a>
     <nav class="nav" aria-label="{{ 'general.menu' | t }}">
-      {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}"{% if link.active %} class="on" aria-current="page"{% endif %}>{{ link.title }}</a>
-      {%- endfor -%}
-      {%- if settings.enable_cart -%}
-        <a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} ({{ cart.item_count }})</a>
-      {%- endif -%}
+      <ul class="nav-list" role="list">
+        {%- for link in menu.links -%}
+          {%- if link.links.size > 0 -%}
+            <li class="has-dd{% if link.links.size > 6 %} is-mega{% endif %}">
+              <button type="button" class="dd-toggle{% if link.child_active or link.active %} on{% endif %}" aria-expanded="false" aria-controls="dd-{{ forloop.index }}">
+                {{ link.title }}<svg class="chev" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+              </button>
+              <div class="dd" id="dd-{{ forloop.index }}">
+                <div class="dd-inner">
+                  {%- if link.url != '#' and link.url != blank -%}
+                    <a class="dd-all" href="{{ link.url }}">{{ 'general.view_all' | t: title: link.title }} →</a>
+                  {%- endif -%}
+                  <ul role="list" class="dd-links">
+                    {%- for child in link.links -%}
+                      <li><a href="{{ child.url }}"{% if child.active %} aria-current="page" class="on"{% endif %}>{{ child.title }}</a></li>
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              </div>
+            </li>
+          {%- else -%}
+            <li><a href="{{ link.url }}"{% if link.active %} class="on" aria-current="page"{% endif %}>{{ link.title }}</a></li>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if settings.enable_cart -%}
+          <li><a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} ({{ cart.item_count }})</a></li>
+        {%- endif -%}
+      </ul>
     </nav>
     <button class="burger" id="burger" aria-label="{{ 'general.open_menu' | t }}" aria-controls="drawer" aria-expanded="false"><div><span></span><span></span><span></span></div></button>
   </div>
 </header>
 <nav class="drawer" id="drawer" aria-label="{{ 'general.menu' | t }}">
   <button class="x" id="drawerX" aria-label="{{ 'general.close' | t }}">×</button>
-  {%- for link in section.settings.menu.links -%}
-    <a href="{{ link.url }}">{{ link.title }} <i>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i></a>
+  {%- for link in menu.links -%}
+    {%- if link.links.size > 0 -%}
+      <details class="acc">
+        <summary>{{ link.title }}<svg class="chev" viewBox="0 0 10 6" aria-hidden="true" focusable="false"><path d="M1 1l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></summary>
+        <div class="acc-body">
+          {%- if link.url != '#' and link.url != blank -%}<a href="{{ link.url }}" class="acc-all">{{ 'general.view_all' | t: title: link.title }}</a>{%- endif -%}
+          {%- for child in link.links -%}<a href="{{ child.url }}">{{ child.title }}</a>{%- endfor -%}
+        </div>
+      </details>
+    {%- else -%}
+      <a href="{{ link.url }}" class="top-link">{{ link.title }}</a>
+    {%- endif -%}
   {%- endfor -%}
-  {%- if settings.enable_cart -%}<a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} <i>{{ cart.item_count }}</i></a>{%- endif -%}
+  {%- if settings.enable_cart -%}<a href="{{ routes.cart_url }}" class="top-link">{{ 'cart.title' | t }} ({{ cart.item_count }})</a>{%- endif -%}
 </nav>
 {% schema %}
 {
@@ -34,7 +67,7 @@
     { "type": "image_picker", "id": "logo", "label": "Logo (facoltativo)" },
     { "type": "text", "id": "title", "label": "Nome", "default": "RICHGIACOMINO" },
     { "type": "text", "id": "subtitle", "label": "Sottotitolo", "default": "BEE DIAMONDS" },
-    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu", "info": "Le voci con sotto-voci diventano menu a tendina; con più di 6 sotto-voci diventano un mega menu (es. Marchi)." }
   ]
 }
 {% endschema %}

@@ -13,6 +13,10 @@
     echo ' ' | append: shop.url | append: product.url
   endcapture
   assign first_coll = product.collections | first
+  assign on_request = false
+  if settings.hide_prices or product.price == 0 or product.tags contains 'price-on-request' or mf.prezzo_su_richiesta.value == true
+    assign on_request = true
+  endif
 -%}
 <div class="pp">
   <div class="wrap">
@@ -48,7 +52,7 @@
           {%- if mf.disponibilita.value != blank -%}{{ mf.disponibilita.value }}{%- elsif product.available -%}{{ 'products.available' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
         </p>
 
-        {%- if settings.enable_cart and product.available -%}
+        {%- if settings.enable_cart and product.available and on_request == false -%}
           {%- form 'product', product, id: 'ProductForm' -%}
             {%- unless product.has_only_default_variant -%}
               <label class="variant">{{ 'products.variant' | t }}
@@ -73,7 +77,11 @@
           {%- if cond != blank -%}<tr><th scope="row">{{ 'products.condition' | t }}</th><td>{{ cond }}</td></tr>{%- endif -%}
           {%- if mf.materiali.value != blank -%}<tr><th scope="row">{{ 'products.materials' | t }}</th><td>{{ mf.materiali.value }}</td></tr>{%- endif -%}
           {%- if mf.accessori.value != blank -%}<tr><th scope="row">{{ 'products.accessories' | t }}</th><td>{{ mf.accessori.value }}</td></tr>{%- endif -%}
+          {%- if product.type != blank -%}<tr><th scope="row">{{ 'products.category' | t }}</th><td>{{ product.type }}</td></tr>{%- endif -%}
           {%- if mf.anno.value != blank -%}<tr><th scope="row">{{ 'products.year' | t }}</th><td>{{ mf.anno.value }}</td></tr>{%- endif -%}
+          {%- if mf.colore.value != blank -%}<tr><th scope="row">{{ 'products.color' | t }}</th><td>{{ mf.colore.value }}</td></tr>{%- endif -%}
+          {%- if current_variant.sku != blank -%}<tr><th scope="row">SKU</th><td>{{ current_variant.sku }}</td></tr>{%- endif -%}
+          <tr><th scope="row">{{ 'products.shipping' | t }}</th><td>{%- if mf.spedizione.value != blank -%}{{ mf.spedizione.value }}{%- else -%}{% render 'delivery-text' %}{%- endif -%}</td></tr>
         </table>
         {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
         {%- if section.settings.note != blank -%}<div class="note">{{ section.settings.note }}</div>{%- endif -%}

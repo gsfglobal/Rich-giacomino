@@ -1,0 +1,53 @@
+<section class="s brands-s" id="shop-by-brand">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div>
+        {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2>{{ section.settings.title }}</h2>
+      </div>
+      {%- if section.settings.subtitle != blank -%}<p class="brands-sub">{{ section.settings.subtitle }}</p>{%- endif -%}
+    </div>
+    <ul class="brands" role="list">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign b = block.settings
+          assign name = b.name | default: b.collection.title
+          assign link = b.collection.url
+          if link == blank
+            assign link = routes.collections_url
+          endif
+        -%}
+        <li class="reveal" {{ block.shopify_attributes }}>
+          <a class="brand-card" href="{{ link }}">
+            <span class="brand-n" aria-hidden="true">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+            <span class="brand-name">{{ name }}</span>
+            {%- if b.tagline != blank -%}<span class="brand-tag">{{ b.tagline }}</span>{%- endif -%}
+            <span class="brand-go">{{ 'sections.explore' | t }} →</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+    {%- if section.settings.note != blank -%}<p class="brands-note">{{ section.settings.note }}</p>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Shop by Brand",
+  "max_blocks": 24,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Shop by brand · Esplora per marchio" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "The world's most iconic brands" },
+    { "type": "text", "id": "subtitle", "label": "Sottotitolo", "default": "Explore the names that define luxury." },
+    { "type": "textarea", "id": "note", "label": "Nota sotto la griglia", "default": "I marchi appartengono ai rispettivi proprietari. Bee Diamonds è un'attività indipendente, non rivenditore autorizzato." }
+  ],
+  "blocks": [{
+    "type": "brand", "name": "Marchio",
+    "settings": [
+      { "type": "text", "id": "name", "label": "Nome del marchio (grafia esatta)" },
+      { "type": "collection", "id": "collection", "label": "Collezione del marchio" },
+      { "type": "text", "id": "tagline", "label": "Riga sotto il nome (facoltativa)" }
+    ]
+  }],
+  "presets": [{ "name": "Shop by Brand" }]
+}
+{% endschema %}

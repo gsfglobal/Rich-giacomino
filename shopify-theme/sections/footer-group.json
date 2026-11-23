@@ -1,1 +1,18 @@
-{ "type": "footer", "name": "Footer group", "sections": { "footer": { "type": "footer", "settings": {} } }, "order": ["footer"] }
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "explore_menu": "footer",
+        "brands_menu": "footer-brands",
+        "care_menu": "customer-care",
+        "brands_link": "/pages/marchi"
+      }
+    }
+  },
+  "order": [
+    "footer"
+  ]
+}

@@ -9,19 +9,23 @@
     "pagination": "Pagine",
     "previous": "Precedente",
     "next": "Successiva",
-    "not_found": "Questa pagina non esiste. Torna nel Rich World."
+    "not_found": "Questa pagina non esiste. Torna nel Rich World.",
+    "view_all": "Vedi tutto · {{ title }}"
   },
   "whatsapp": {
     "generic": "Ciao Giacomino! Ti scrivo dal sito {{ shop }}.",
     "aria": "Scrivi su WhatsApp",
     "collection": "Ciao Giacomino! Sono nella boutique {{ collection }} del tuo sito: cosa hai disponibile?",
     "product": "Ciao Giacomino! Mi interessa: {{ vendor }} — {{ title }}",
-    "looking": "Ciao Giacomino! Sto cercando un pezzo che non trovo sul sito."
+    "looking": "Ciao Giacomino! Sto cercando un pezzo che non trovo sul sito.",
+    "delivery": "Ciao Giacomino! Vorrei informazioni su spedizioni e consegne.",
+    "looking_in": "Ciao Giacomino! Cerco un pezzo {{ collection }}: cosa hai disponibile?"
   },
   "sections": {
     "enter": "Entra",
     "ask": "Chiedi a Giacomino",
-    "all_catalog": "Tutto il catalogo"
+    "all_catalog": "Tutto il catalogo",
+    "explore": "Esplora"
   },
   "products": {
     "price_on_request": "PRICE ON REQUEST",
@@ -40,7 +44,10 @@
     "condition": "Condizione",
     "materials": "Materiali",
     "accessories": "Documenti e accessori",
-    "year": "Anno"
+    "year": "Anno",
+    "category": "Categoria",
+    "color": "Colore",
+    "shipping": "Spedizione"
   },
   "collections": {
     "filters": "Filtri",
@@ -53,7 +60,10 @@
       "other": "{{ count }} pezzi"
     },
     "empty": "Nessun pezzo con questi filtri.",
-    "boutiques": "Le boutique"
+    "boutiques": "Le boutique",
+    "sort": "Ordina",
+    "empty_title": "{{ title }}: in arrivo",
+    "empty_coming": "Al momento non ci sono pezzi pubblicati. Scrivi a Giacomino: spesso i pezzi arrivano prima su WhatsApp."
   },
   "cart": {
     "title": "Carrello",
@@ -68,5 +78,25 @@
     "placeholder": "Rolex, tennis, Cuban link…",
     "submit": "Cerca",
     "none": "Nessun risultato per \"{{ terms }}\"."
+  },
+  "delivery": {
+    "courier": "Corriere",
+    "area": "Area servita",
+    "tracking": "Tracciabilità",
+    "insurance": "Assicurazione"
+  },
+  "pages": {
+    "draft": "Bozza da completare: questa pagina contiene campi [DA COMPLETARE] e va revisionata prima della pubblicazione."
+  },
+  "contact": {
+    "phone": "Telefono",
+    "address": "Sede",
+    "hours": "Orari",
+    "company": "Dati aziendali",
+    "name": "Nome",
+    "email": "Email",
+    "message": "Messaggio",
+    "send": "Invia",
+    "success": "Grazie, ti risponderemo al più presto."
   }
 }

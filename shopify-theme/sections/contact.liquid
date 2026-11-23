@@ -1,0 +1,47 @@
+<section class="s" style="padding-top:40px">
+  <div class="wrap contact-grid">
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 style="font-size:clamp(1.8rem,5vw,2.6rem);margin:12px 0 18px">{{ section.settings.title }}</h2>
+      {%- if settings.whatsapp_number != blank -%}
+        {%- capture wa_text -%}{{ 'whatsapp.generic' | t: shop: shop.name }}{%- endcapture -%}
+        <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}WhatsApp</a>
+      {%- endif -%}
+      <dl class="delivery-list" style="margin-top:22px">
+        {%- if settings.phone != blank -%}<div><dt>{{ 'contact.phone' | t }}</dt><dd><a href="tel:{{ settings.phone | remove: ' ' }}">{{ settings.phone }}</a></dd></div>{%- endif -%}
+        {%- if settings.address != blank -%}<div><dt>{{ 'contact.address' | t }}</dt><dd>{{ settings.address }}</dd></div>{%- endif -%}
+        {%- if section.settings.hours != blank -%}<div><dt>{{ 'contact.hours' | t }}</dt><dd>{{ section.settings.hours }}</dd></div>{%- endif -%}
+        <div><dt>{{ 'contact.company' | t }}</dt><dd>{{ section.settings.company }}</dd></div>
+      </dl>
+    </div>
+    <div>
+      {%- form 'contact', class: 'cform' -%}
+        {%- if form.posted_successfully? -%}<p class="note" role="status">{{ 'contact.success' | t }}</p>{%- endif -%}
+        {%- if form.errors -%}<p class="note" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+        <label for="c-name">{{ 'contact.name' | t }}</label>
+        <input id="c-name" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+        <label for="c-email">{{ 'contact.email' | t }} *</label>
+        <input id="c-email" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+        <label for="c-phone">{{ 'contact.phone' | t }}</label>
+        <input id="c-phone" type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}">
+        <label for="c-msg">{{ 'contact.message' | t }}</label>
+        <textarea id="c-msg" name="contact[body]" rows="5">{{ form.body }}</textarea>
+        <p class="cform-privacy">{{ section.settings.privacy_note }}</p>
+        <button type="submit" class="btn btn-gold">{{ 'contact.send' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Contatti",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Contatti" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Parla con Giacomino" },
+    { "type": "text", "id": "hours", "label": "Orari", "default": "[DA COMPLETARE]" },
+    { "type": "text", "id": "company", "label": "Ragione sociale e P.IVA", "default": "[DA COMPLETARE: ragione sociale · P.IVA · sede legale]" },
+    { "type": "textarea", "id": "privacy_note", "label": "Nota privacy sotto il modulo", "default": "Inviando il modulo accetti il trattamento dei dati come descritto nella Privacy Policy. [DA COMPLETARE]" }
+  ],
+  "presets": [{ "name": "Contatti" }]
+}
+{% endschema %}

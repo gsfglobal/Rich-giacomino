@@ -9,19 +9,23 @@
     "pagination": "Pages",
     "previous": "Previous",
     "next": "Next",
-    "not_found": "This page does not exist. Back to the Rich World."
+    "not_found": "This page does not exist. Back to the Rich World.",
+    "view_all": "View all · {{ title }}"
   },
   "whatsapp": {
     "generic": "Hi Giacomino! I'm writing from {{ shop }}.",
     "aria": "Chat on WhatsApp",
     "collection": "Hi Giacomino! I'm in the {{ collection }} boutique on your site: what's available?",
     "product": "Hi Giacomino! I'm interested in: {{ vendor }} — {{ title }}",
-    "looking": "Hi Giacomino! I'm looking for a piece I can't find on the site."
+    "looking": "Hi Giacomino! I'm looking for a piece I can't find on the site.",
+    "delivery": "Hi Giacomino! I'd like information about shipping and delivery.",
+    "looking_in": "Hi Giacomino! I'm looking for a {{ collection }} piece: what's available?"
   },
   "sections": {
     "enter": "Enter",
     "ask": "Ask Giacomino",
-    "all_catalog": "Full catalogue"
+    "all_catalog": "Full catalogue",
+    "explore": "Explore"
   },
   "products": {
     "price_on_request": "PRICE ON REQUEST",
@@ -40,7 +44,10 @@
     "condition": "Condition",
     "materials": "Materials",
     "accessories": "Papers and accessories",
-    "year": "Year"
+    "year": "Year",
+    "category": "Category",
+    "color": "Colour",
+    "shipping": "Shipping"
   },
   "collections": {
     "filters": "Filters",
@@ -53,7 +60,10 @@
       "other": "{{ count }} pieces"
     },
     "empty": "No pieces match these filters.",
-    "boutiques": "Boutiques"
+    "boutiques": "Boutiques",
+    "sort": "Sort",
+    "empty_title": "{{ title }}: coming soon",
+    "empty_coming": "No pieces are published right now. Message Giacomino: new pieces often arrive on WhatsApp first."
   },
   "cart": {
     "title": "Cart",
@@ -68,5 +78,25 @@
     "placeholder": "Rolex, tennis, Cuban link…",
     "submit": "Search",
     "none": "No results for \"{{ terms }}\"."
+  },
+  "delivery": {
+    "courier": "Courier",
+    "area": "Area served",
+    "tracking": "Tracking",
+    "insurance": "Insurance"
+  },
+  "pages": {
+    "draft": "Draft: this page contains [DA COMPLETARE] fields and must be reviewed before publishing."
+  },
+  "contact": {
+    "phone": "Phone",
+    "address": "Address",
+    "hours": "Hours",
+    "company": "Company details",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "success": "Thank you, we'll reply soon."
   }
 }

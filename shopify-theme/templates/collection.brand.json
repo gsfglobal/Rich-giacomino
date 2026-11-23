@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "mode": "brand",
+        "eyebrow": "Brand",
+        "neon": "#7437FF"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

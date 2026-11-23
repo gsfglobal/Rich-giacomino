@@ -1,0 +1,6 @@
+{%- comment -%} Short shipping line used in the footer {%- endcomment -%}
+{%- if settings.courier_confirmed -%}
+  {{- settings.delivery_description -}}{% if settings.courier_name != blank %} · {{ settings.courier_name }}{% endif %}
+{%- else -%}
+  {{- settings.delivery_neutral -}}
+{%- endif -%}
