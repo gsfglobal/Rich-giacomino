@@ -155,8 +155,29 @@ function initHero(){
     const h2=new THREE.Mesh(new THREE.BoxGeometry(.05,.32,.04),goldM);h2.position.set(.13,-.06,.09);h2.rotation.z=-1.1;g.add(h2);
     [1,-1].forEach(s=>{const st=new THREE.Mesh(new THREE.BoxGeometry(.7,1,.12),m);st.position.y=s*1.25;g.add(st);});
     const cr=new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.18,16),m);cr.rotation.z=Math.PI/2;cr.position.x=.92;g.add(cr);return g;}
-  add(watch(goldM),[-2.6,3.8,-3.5],.8);
-  add(watch(steelM),[2.7,4.2,-4.2],-.7);
+  /* orologi: foto reali scontornate (impostazioni hero) oppure orologi 3D generici */
+  const photoWatches=[];
+  function glowTex(c1,c2){const c=document.createElement("canvas");c.width=c.height=128;const x=c.getContext("2d");const g=x.createRadialGradient(64,64,0,64,64,64);g.addColorStop(0,c1);g.addColorStop(.45,c2);g.addColorStop(1,"rgba(0,0,0,0)");x.fillStyle=g;x.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
+  function photoWatch(url,pos,h,glowA,glowB,dir,ph){
+    const g=new THREE.Group();
+    const tex=new THREE.TextureLoader().load(url,t=>{const a=t.image.width/t.image.height;body.scale.set(a,1,1);shine.scale.set(a,1,1);});
+    tex.encoding=THREE.sRGBEncoding;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();
+    const geo=new THREE.PlaneGeometry(h,h);
+    const body=new THREE.Mesh(geo,new THREE.MeshBasicMaterial({map:tex,transparent:true,depthWrite:false,fog:false,toneMapped:false}));
+    const shineMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+      uniforms:{map:{value:tex},t:{value:0},off:{value:ph}},
+      vertexShader:"varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}",
+      fragmentShader:"uniform sampler2D map;uniform float t;uniform float off;varying vec2 vUv;void main(){vec4 c=texture2D(map,vUv);float p=mod(t*.28+off,2.4)-.5;float d=(vUv.x*.8+vUv.y)-p*1.8;float b=exp(-d*d*90.)*.85+exp(-d*d*900.)*.6;float l=dot(c.rgb,vec3(.299,.587,.114));gl_FragColor=vec4(vec3(1.,.93,.78)*b*c.a*(.35+l),1.);}"});
+    const shine=new THREE.Mesh(geo,shineMat);shine.position.z=.01;
+    const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(glowA,glowB),blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:.8}));
+    glow.scale.set(h*1.9,h*1.9,1);glow.position.z=-.15;
+    g.add(glow,body,shine);
+    add(g,pos,0);g.userData.dir=dir;g.userData.wph=ph;g.userData.shine=shineMat;g.userData.glow=glow;
+    photoWatches.push(g);
+  }
+  const w1=heroEl.dataset.watch1,w2=heroEl.dataset.watch2;
+  if(w1)photoWatch(w1,mobile?[-1.95,5.7,-1.6]:[-3.5,3.7,-1.6],mobile?2.05:3.3,"rgba(150,190,255,.55)","rgba(116,55,255,.18)",1,0);else add(watch(goldM),[-2.6,3.8,-3.5],.8);
+  if(w2)photoWatch(w2,mobile?[1.95,5.5,-1.9]:[3.5,4.0,-2.0],mobile?2.05:3.3,"rgba(255,226,160,.55)","rgba(212,175,101,.18)",-1,1.2);else add(watch(steelM),[2.7,4.2,-4.2],-.7);
 
   // catena
   const chain=new THREE.Group();
@@ -196,6 +217,7 @@ function initHero(){
     cam.position.set(mx*1.2,2.4+p*1.6-my*.6,9-p*20);
     cam.lookAt(0,3.6+p*.8,-12-p*20);
     floats.forEach((o,i)=>{o.rotation.y+=reduce?0:o.userData.spin*.012;o.position.y=o.userData.base+Math.sin(t*1.1+o.userData.ph)*.18;});
+    photoWatches.forEach(g=>{const u=g.userData;if(!reduce){g.rotation.y=Math.sin(t*.55+u.wph)*.38*u.dir+(mx*.25);g.rotation.z=Math.sin(t*.4+u.wph)*.05*u.dir;g.rotation.x=-my*.12;}u.shine.uniforms.t.value=t;u.glow.material.opacity=.6+Math.sin(t*1.3+u.wph)*.2;});
     dia.rotation.y=reduce?0:Math.sin(t*.7)*.3;dia.rotation.z=Math.sin(t*.5)*.04;const ds=1+Math.sin(t*1.6)*.025;dia.scale.set(ds,ds,1);glow.material.opacity=.75+Math.sin(t*2.2)*.25;
     sparks.rotation.y=Math.sin(t*.05)*.05;
     charEl.style.opacity=String(1-p*1.8);charEl.style.transform=`translateX(-50%) scale(${1-p*.3})`;
