@@ -251,7 +251,9 @@ footer a:hover{color:var(--ice)}
 /* boutique facade in CSS (theme version) */
 .facade-svg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,color-mix(in srgb,var(--neon) 40%,transparent),transparent 65%),repeating-linear-gradient(90deg,transparent 0 38px,rgba(255,255,255,.03) 38px 40px),#0c0d14}
 .facade-svg::before{content:"";position:absolute;left:10%;right:10%;top:22%;bottom:0;background:#11131c;border:1px solid #262938;border-bottom:0}
-.fs-sign{position:absolute;left:17%;right:17%;top:27%;text-align:center;font-family:Syne;font-weight:800;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;color:var(--neon);border:2px solid var(--neon);border-radius:6px;padding:6px 4px;text-shadow:0 0 10px var(--neon);box-shadow:0 0 14px color-mix(in srgb,var(--neon) 50%,transparent),inset 0 0 10px color-mix(in srgb,var(--neon) 30%,transparent);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fs-win{position:absolute;left:35%;right:35%;top:44%;aspect-ratio:1;display:grid;place-items:center}
+.fs-sign{position:absolute;left:14%;right:14%;top:26%;text-align:center;font-family:Syne;font-weight:800;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(.62rem,2.6vw,.8rem);line-height:1.15;color:var(--neon);border:2px solid var(--neon);border-radius:6px;padding:6px 4px;text-shadow:0 0 10px var(--neon);box-shadow:0 0 14px color-mix(in srgb,var(--neon) 50%,transparent),inset 0 0 10px color-mix(in srgb,var(--neon) 30%,transparent);}
+.fs-win{position:absolute;left:40%;right:40%;top:41%;aspect-ratio:1;display:grid;place-items:center}
 .fs-win svg,.fs-win img{width:100%;height:auto}
 footer h2.fh{font-family:Syne;font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+
+@media (max-width:700px){.pp .price{font-size:1.05rem;letter-spacing:.04em}}
