@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="{{ settings.color_black }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+  {%- endif -%}
+  <title>{{ page_title }}{% if current_page != 1 %} – {{ 'general.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  {% render 'meta-tags' %}
+  {{ 'syne-latin-800-normal.woff2' | asset_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: 'anonymous' }}
+  <style>
+    @font-face{font-family:Syne;font-weight:700;font-style:normal;font-display:swap;src:url({{ 'syne-latin-700-normal.woff2' | asset_url }}) format('woff2')}
+    @font-face{font-family:Syne;font-weight:800;font-style:normal;font-display:swap;src:url({{ 'syne-latin-800-normal.woff2' | asset_url }}) format('woff2')}
+    @font-face{font-family:Manrope;font-weight:400;font-style:normal;font-display:swap;src:url({{ 'manrope-latin-400-normal.woff2' | asset_url }}) format('woff2')}
+    @font-face{font-family:Manrope;font-weight:600;font-style:normal;font-display:swap;src:url({{ 'manrope-latin-600-normal.woff2' | asset_url }}) format('woff2')}
+    @font-face{font-family:Manrope;font-weight:700;font-style:normal;font-display:swap;src:url({{ 'manrope-latin-700-normal.woff2' | asset_url }}) format('woff2')}
+    :root{
+      --black:{{ settings.color_black }};
+      --gold:{{ settings.color_gold }};
+      --violet:{{ settings.color_violet }};
+      --blue:{{ settings.color_blue }};
+      --ice:{{ settings.color_ice }};
+    }
+  </style>
+  {{ 'rich.css' | asset_url | stylesheet_tag }}
+  {{ content_for_header }}
+</head>
+<body class="template-{{ template.name }}">
+  <a class="sr" href="#MainContent">{{ 'general.skip' | t }}</a>
+  {% render 'svg-defs' %}
+  {% sections 'header-group' %}
+
+  <main id="MainContent" tabindex="-1">
+    {{ content_for_layout }}
+  </main>
+
+  {% sections 'footer-group' %}
+
+  {%- if settings.show_guide -%}
+    <div class="guide hide" id="guide" data-default="{{ settings.guide_default | escape }}">
+      <button class="face" id="guideFace" aria-label="{{ 'general.guide' | t }}">
+        {%- if settings.guide_face != blank -%}
+          {{ settings.guide_face | image_url: width: 160 | image_tag: alt: '', width: 160, height: 160, style: 'width:100%;height:100%;object-fit:cover' }}
+        {%- else -%}
+          <img src="{{ 'face.webp' | asset_url }}" alt="" width="160" height="160" style="width:100%;height:100%;object-fit:cover">
+        {%- endif -%}
+      </button>
+      <div class="bub"><button class="cl" id="guideX" aria-label="{{ 'general.close' | t }}">×</button><span id="guideTxt"></span></div>
+    </div>
+  {%- endif -%}
+
+  {%- if settings.whatsapp_number != blank -%}
+    {%- capture wa_text -%}{{ 'whatsapp.generic' | t: shop: shop.name }}{%- endcapture -%}
+    <a href="{% render 'wa-url', text: wa_text %}" class="fab" target="_blank" rel="noopener" aria-label="{{ 'whatsapp.aria' | t }}">
+      {% render 'icon-wa' %}<span class="lbl">WhatsApp</span>
+    </a>
+  {%- endif -%}
+
+  <script>
+    window.RICH = {
+      guideHome: {{ settings.guide_home | json }},
+      guideCollection: {{ settings.guide_collection | json }},
+      guideProduct: {{ settings.guide_product | json }},
+      template: {{ template.name | json }}
+    };
+  </script>
+  <script src="{{ 'rich.js' | asset_url }}" defer></script>
+</body>
+</html>

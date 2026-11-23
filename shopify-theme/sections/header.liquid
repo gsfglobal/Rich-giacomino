@@ -1,0 +1,40 @@
+<header class="top{% if template.name != 'index' %} solid{% endif %}" id="top" data-solid="{% if template.name != 'index' %}1{% endif %}">
+  <div class="wrap bar">
+    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}, home">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 240 | image_tag: alt: shop.name, style: 'height:36px;width:auto' }}
+      {%- else -%}
+        <svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg>
+        <span>{{ section.settings.title | default: shop.name }}<small>{{ section.settings.subtitle }}</small></span>
+      {%- endif -%}
+    </a>
+    <nav class="nav" aria-label="{{ 'general.menu' | t }}">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}"{% if link.active %} class="on" aria-current="page"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+      {%- if settings.enable_cart -%}
+        <a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} ({{ cart.item_count }})</a>
+      {%- endif -%}
+    </nav>
+    <button class="burger" id="burger" aria-label="{{ 'general.open_menu' | t }}" aria-controls="drawer" aria-expanded="false"><div><span></span><span></span><span></span></div></button>
+  </div>
+</header>
+<nav class="drawer" id="drawer" aria-label="{{ 'general.menu' | t }}">
+  <button class="x" id="drawerX" aria-label="{{ 'general.close' | t }}">×</button>
+  {%- for link in section.settings.menu.links -%}
+    <a href="{{ link.url }}">{{ link.title }} <i>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</i></a>
+  {%- endfor -%}
+  {%- if settings.enable_cart -%}<a href="{{ routes.cart_url }}">{{ 'cart.title' | t }} <i>{{ cart.item_count }}</i></a>{%- endif -%}
+</nav>
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo (facoltativo)" },
+    { "type": "text", "id": "title", "label": "Nome", "default": "RICHGIACOMINO" },
+    { "type": "text", "id": "subtitle", "label": "Sottotitolo", "default": "BEE DIAMONDS" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

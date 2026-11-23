@@ -1,0 +1,40 @@
+<section class="s"{% if section.settings.top_space == false %} style="padding-top:20px"{% endif %}>
+  <div class="wrap">
+    {%- if section.settings.title != blank -%}
+    <div class="s-head reveal">
+      <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div>
+      {%- if section.settings.link_label != blank -%}<a href="{{ section.settings.link }}" class="btn btn-ghost">{{ section.settings.link_label }}</a>{%- endif -%}
+    </div>
+    {%- endif -%}
+    <div class="tgrid">
+      {%- for block in section.blocks -%}
+        <div class="tcard reveal" {{ block.shopify_attributes }}>
+          <div class="ic" aria-hidden="true">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <div class="rte">{{ block.settings.text }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.legal != blank -%}<div class="legal rte">{{ section.settings.legal }}</div>{%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Fiducia",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Acquisti di alto valore" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Comprare con fiducia" },
+    { "type": "text", "id": "link_label", "label": "Testo link" },
+    { "type": "url", "id": "link", "label": "Link" },
+    { "type": "richtext", "id": "legal", "label": "Avviso sui marchi" },
+    { "type": "checkbox", "id": "top_space", "label": "Spazio sopra", "default": false }
+  ],
+  "blocks": [{ "type": "card", "name": "Riquadro", "settings": [
+    { "type": "text", "id": "icon", "label": "Icona (carattere)", "default": "◆" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Titolo" },
+    { "type": "richtext", "id": "text", "label": "Testo", "default": "<p>Testo</p>" }
+  ]}],
+  "presets": [{ "name": "Fiducia" }]
+}
+{% endschema %}

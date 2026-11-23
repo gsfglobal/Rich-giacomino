@@ -1,0 +1,72 @@
+{
+  "general": {
+    "skip": "Vai al contenuto",
+    "menu": "Menu",
+    "open_menu": "Apri menu",
+    "close": "Chiudi",
+    "guide": "Giacomino",
+    "page": "Pagina {{ page }}",
+    "pagination": "Pagine",
+    "previous": "Precedente",
+    "next": "Successiva",
+    "not_found": "Questa pagina non esiste. Torna nel Rich World."
+  },
+  "whatsapp": {
+    "generic": "Ciao Giacomino! Ti scrivo dal sito {{ shop }}.",
+    "aria": "Scrivi su WhatsApp",
+    "collection": "Ciao Giacomino! Sono nella boutique {{ collection }} del tuo sito: cosa hai disponibile?",
+    "product": "Ciao Giacomino! Mi interessa: {{ vendor }} — {{ title }}",
+    "looking": "Ciao Giacomino! Sto cercando un pezzo che non trovo sul sito."
+  },
+  "sections": {
+    "enter": "Entra",
+    "ask": "Chiedi a Giacomino",
+    "all_catalog": "Tutto il catalogo"
+  },
+  "products": {
+    "price_on_request": "PRICE ON REQUEST",
+    "from": "Da",
+    "available": "Disponibile",
+    "sold": "Venduto",
+    "example": "Esempio",
+    "example_brand": "Marchio",
+    "example_title": "Il tuo pezzo qui",
+    "photo": "Foto {{ n }}",
+    "variant": "Variante",
+    "add_to_cart": "Aggiungi al carrello",
+    "ask_whatsapp": "Richiedi su WhatsApp",
+    "brand": "Marchio",
+    "reference": "Modello / referenza",
+    "condition": "Condizione",
+    "materials": "Materiali",
+    "accessories": "Documenti e accessori",
+    "year": "Anno"
+  },
+  "collections": {
+    "filters": "Filtri",
+    "all": "tutti",
+    "price_min": "Prezzo min",
+    "price_max": "Prezzo max",
+    "apply": "Applica",
+    "count": {
+      "one": "1 pezzo",
+      "other": "{{ count }} pezzi"
+    },
+    "empty": "Nessun pezzo con questi filtri.",
+    "boutiques": "Le boutique"
+  },
+  "cart": {
+    "title": "Carrello",
+    "quantity": "Quantità",
+    "total": "Totale",
+    "update": "Aggiorna",
+    "checkout": "Vai al pagamento",
+    "empty": "Il carrello è vuoto."
+  },
+  "search": {
+    "title": "Cerca",
+    "placeholder": "Rolex, tennis, Cuban link…",
+    "submit": "Cerca",
+    "none": "Nessun risultato per \"{{ terms }}\"."
+  }
+}

@@ -1,0 +1,23 @@
+{%- assign t = section.settings.title | default: page.title -%}
+<div class="dhero">
+  <div class="amb" style="background:radial-gradient(circle at 70% 0%,color-mix(in srgb,{{ section.settings.glow }} 32%,transparent),transparent 55%),radial-gradient(circle at 0% 100%,color-mix(in srgb,var(--violet) 25%,transparent),transparent 50%)"></div>
+  <div class="wrap">
+    <p class="crumbs"><a href="{{ routes.root_url }}">{{ shop.name }}</a> / {{ page.title }}</p>
+    {%- if section.settings.eyebrow != blank -%}<p class="eyebrow" style="margin-top:22px">{{ section.settings.eyebrow }}</p>{%- endif -%}
+    <h1 style="font-size:clamp(2rem,8.4vw,6rem)">{{ t }}{% if section.settings.gold != blank %}<br><span class="gold">{{ section.settings.gold }}</span>{% endif %}</h1>
+    {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Intestazione pagina",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo" },
+    { "type": "text", "id": "title", "label": "Titolo (vuoto = titolo pagina)" },
+    { "type": "text", "id": "gold", "label": "Seconda riga dorata" },
+    { "type": "textarea", "id": "text", "label": "Testo" },
+    { "type": "color", "id": "glow", "label": "Colore luce", "default": "#D4AF65" }
+  ],
+  "presets": [{ "name": "Intestazione pagina" }]
+}
+{% endschema %}

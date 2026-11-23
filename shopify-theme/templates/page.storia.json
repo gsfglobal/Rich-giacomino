@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "Who is",
+        "gold": "Richgiacomino",
+        "text": "Il volto del Rich World. Da qui parte ogni pezzo: lo sceglie, lo mostra su TikTok, lo consegna."
+      }
+    },
+    "story": {
+      "type": "story",
+      "settings": {}
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "reels": {
+      "type": "tiktok-reels",
+      "blocks": {
+        "r0": {
+          "type": "reel",
+          "settings": {
+            "title": "Unboxing orologio"
+          }
+        },
+        "r1": {
+          "type": "reel",
+          "settings": {
+            "title": "Il caveau dei diamanti"
+          }
+        },
+        "r2": {
+          "type": "reel",
+          "settings": {
+            "title": "Iced out da vicino"
+          }
+        },
+        "r3": {
+          "type": "reel",
+          "settings": {
+            "title": "Nuovo drop"
+          }
+        }
+      },
+      "block_order": [
+        "r0",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "story",
+    "main",
+    "reels"
+  ]
+}

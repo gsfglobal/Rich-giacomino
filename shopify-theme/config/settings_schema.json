@@ -1,0 +1,153 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Rich World",
+    "theme_version": "1.0.0",
+    "theme_author": "Peppe Veccia",
+    "theme_documentation_url": "https://gsfglobal.github.io/Rich-giacomino/",
+    "theme_support_url": "https://gsfglobal.github.io/Rich-giacomino/"
+  },
+  {
+    "name": "WhatsApp e contatti",
+    "settings": [
+      {
+        "type": "text",
+        "id": "whatsapp_number",
+        "label": "Numero WhatsApp (con prefisso, es. 393925791426)",
+        "default": "393925791426"
+      },
+      {
+        "type": "text",
+        "id": "phone",
+        "label": "Telefono da mostrare",
+        "default": "+39 392 579 1426"
+      },
+      {
+        "type": "textarea",
+        "id": "address",
+        "label": "Indirizzo",
+        "default": "Oromare · Strada Provinciale 22, Km 1,750 · 81025 Marcianise (CE)"
+      },
+      {
+        "type": "url",
+        "id": "tiktok_url",
+        "label": "TikTok",
+        "default": "https://www.tiktok.com/@giacominorichdiamonds"
+      },
+      {
+        "type": "url",
+        "id": "instagram_url",
+        "label": "Instagram"
+      }
+    ]
+  },
+  {
+    "name": "Vendita",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_cart",
+        "label": "Attiva carrello e pagamento online",
+        "default": false,
+        "info": "Spento: il sito è una vetrina e ogni richiesta passa da WhatsApp."
+      },
+      {
+        "type": "checkbox",
+        "id": "hide_prices",
+        "label": "Nascondi tutti i prezzi (PRICE ON REQUEST)",
+        "default": false,
+        "info": "Anche senza questa opzione, un prodotto a 0 € o con il tag price-on-request mostra PRICE ON REQUEST."
+      }
+    ]
+  },
+  {
+    "name": "Colori",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_black",
+        "label": "Nero luxury",
+        "default": "#08090D"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Oro champagne",
+        "default": "#D4AF65"
+      },
+      {
+        "type": "color",
+        "id": "color_violet",
+        "label": "Viola elettrico",
+        "default": "#7437FF"
+      },
+      {
+        "type": "color",
+        "id": "color_blue",
+        "label": "Blu diamante",
+        "default": "#39D8FF"
+      },
+      {
+        "type": "color",
+        "id": "color_ice",
+        "label": "Bianco ghiaccio",
+        "default": "#F8F8FA"
+      }
+    ]
+  },
+  {
+    "name": "Guida (Giacomino)",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_guide",
+        "label": "Mostra Giacomino che accompagna il cliente",
+        "default": true
+      },
+      {
+        "type": "image_picker",
+        "id": "guide_face",
+        "label": "Volto (quadrato)"
+      },
+      {
+        "type": "text",
+        "id": "guide_home",
+        "label": "Messaggio in homepage",
+        "default": "Benvenuto nel <b>Rich World</b> 💎 Scorri ed entra nelle boutique."
+      },
+      {
+        "type": "text",
+        "id": "guide_collection",
+        "label": "Messaggio nelle boutique",
+        "default": "Tocca un pezzo e chiedimi tutto su <b>WhatsApp</b>."
+      },
+      {
+        "type": "text",
+        "id": "guide_product",
+        "label": "Messaggio nella scheda",
+        "default": "Ti piace? Premi <b>Richiedi su WhatsApp</b>: il nome arriva già nel messaggio."
+      },
+      {
+        "type": "text",
+        "id": "guide_default",
+        "label": "Messaggio nelle altre pagine",
+        "default": "Per qualsiasi pezzo, <b>scrivimi</b>."
+      }
+    ]
+  },
+  {
+    "name": "Social e favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Immagine di condivisione"
+      }
+    ]
+  }
+]

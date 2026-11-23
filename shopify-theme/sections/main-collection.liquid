@@ -1,0 +1,100 @@
+{%- liquid
+  assign neon = collection.metafields.custom.colore_neon.value | default: section.settings.neon
+  assign words = collection.title | split: ' '
+  assign last = words | last
+  assign first_words = collection.title | remove_last: last | strip
+  capture wa_text
+    echo 'whatsapp.collection' | t: collection: collection.title
+  endcapture
+-%}
+<div class="dhero">
+  <div class="amb" style="background:radial-gradient(circle at 75% 20%,color-mix(in srgb,{{ neon }} 40%,transparent),transparent 55%),radial-gradient(circle at 0% 100%,color-mix(in srgb,var(--violet) 22%,transparent),transparent 50%)"></div>
+  <div class="art" aria-hidden="true">
+    {%- if collection.image -%}
+      {{ collection.image | image_url: width: 900 | image_tag: loading: 'eager', alt: '' }}
+    {%- else -%}
+      {% render 'art', type: section.settings.art, color: section.settings.art_color %}
+    {%- endif -%}
+  </div>
+  <div class="wrap">
+    <p class="crumbs"><a href="{{ routes.root_url }}">{{ shop.name }}</a> / {{ collection.title }}</p>
+    <p class="eyebrow" style="margin-top:22px">{{ section.settings.eyebrow }}</p>
+    <h1>{% if first_words != blank %}{{ first_words }} {% endif %}<span class="gold">{{ last }}</span></h1>
+    {%- if collection.description != blank -%}<div class="rte">{{ collection.description }}</div>{%- endif -%}
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
+      {%- if settings.whatsapp_number != blank -%}<a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ 'sections.ask' | t }}</a>{%- endif -%}
+      {%- if collection.handle != 'all' -%}<a href="{{ routes.all_products_collection_url }}" class="btn btn-ghost">{{ 'sections.all_catalog' | t }}</a>{%- endif -%}
+    </div>
+  </div>
+</div>
+
+<section class="s" style="padding-top:30px">
+  <div class="wrap">
+    {%- paginate collection.products by section.settings.per_page -%}
+      {%- if section.settings.show_filters and collection.filters.size > 0 -%}
+        <form class="filters" id="FacetForm" action="{{ collection.url }}" method="get" role="search" aria-label="{{ 'collections.filters' | t }}">
+          {%- for filter in collection.filters -%}
+            {%- case filter.type -%}
+              {%- when 'list', 'boolean' -%}
+                <label class="sr" for="f-{{ forloop.index }}">{{ filter.label }}</label>
+                <select id="f-{{ forloop.index }}" name="{{ filter.param_name }}" data-autosubmit>
+                  <option value="">{{ filter.label }}: {{ 'collections.all' | t }}</option>
+                  {%- for v in filter.values -%}
+                    <option value="{{ v.value | escape }}"{% if v.active %} selected{% endif %}{% if v.count == 0 and v.active == false %} disabled{% endif %}>{{ v.label }} ({{ v.count }})</option>
+                  {%- endfor -%}
+                </select>
+              {%- when 'price_range' -%}
+                <label class="sr" for="pmin">{{ 'collections.price_min' | t }}</label>
+                <input id="pmin" type="number" min="0" name="{{ filter.min_value.param_name }}" value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}" placeholder="{{ 'collections.price_min' | t }}" data-autosubmit>
+                <label class="sr" for="pmax">{{ 'collections.price_max' | t }}</label>
+                <input id="pmax" type="number" min="0" name="{{ filter.max_value.param_name }}" value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}" placeholder="{{ 'collections.price_max' | t }}" data-autosubmit>
+            {%- endcase -%}
+          {%- endfor -%}
+          <input type="hidden" name="sort_by" value="{{ collection.sort_by | default: collection.default_sort_by }}">
+          <noscript><button class="btn btn-ghost" type="submit">{{ 'collections.apply' | t }}</button></noscript>
+          <span class="count">{{ 'collections.count' | t: count: collection.products_count }}</span>
+        </form>
+      {%- endif -%}
+
+      <div class="grid">
+        {%- for product in collection.products -%}
+          {% render 'product-card', product: product %}
+        {%- else -%}
+          <div class="empty" style="grid-column:1/-1">
+            {{ 'collections.empty' | t }}
+            {%- if settings.whatsapp_number != blank -%}
+              {%- capture wa_empty -%}{{ 'whatsapp.looking' | t }}{%- endcapture -%}
+              <a href="{% render 'wa-url', text: wa_empty %}" target="_blank" rel="noopener" style="color:var(--gold)">{{ 'sections.ask' | t }} →</a>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="{{ 'general.pagination' | t }}">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" aria-label="{{ 'general.previous' | t }}">←</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}">{{ part.title }}</a>{%- elsif part.title == paginate.current_page -%}<span class="current" aria-current="page">{{ part.title }}</span>{%- else -%}<span>{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" aria-label="{{ 'general.next' | t }}">→</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Pagina boutique",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Boutique" },
+    { "type": "color", "id": "neon", "label": "Colore luce (se la collezione non ha il metafield custom.colore_neon)", "default": "#D4AF65" },
+    { "type": "select", "id": "art", "label": "Illustrazione (se la collezione non ha immagine)", "default": "diamond", "options": [
+      { "value": "watch", "label": "Orologio" }, { "value": "bag", "label": "Borsa" }, { "value": "diamond", "label": "Diamante" },
+      { "value": "chain", "label": "Catena" }, { "value": "vault", "label": "Caveau" }, { "value": "shades", "label": "Occhiali" } ] },
+    { "type": "select", "id": "art_color", "label": "Colore illustrazione", "default": "gold", "options": [
+      { "value": "gold", "label": "Oro" }, { "value": "steel", "label": "Acciaio" }, { "value": "ice", "label": "Ghiaccio" }, { "value": "violet", "label": "Viola" } ] },
+    { "type": "checkbox", "id": "show_filters", "label": "Mostra filtri", "default": true },
+    { "type": "range", "id": "per_page", "label": "Pezzi per pagina", "min": 8, "max": 48, "step": 4, "default": 24 }
+  ]
+}
+{% endschema %}

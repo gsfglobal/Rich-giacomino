@@ -1,0 +1,3 @@
+{%- comment -%} Renders a wa.me URL. Param: text {%- endcomment -%}
+{%- assign wa_digits = settings.whatsapp_number | remove: '+' | remove: ' ' | remove: '-' | remove: '.' -%}
+https://wa.me/{{ wa_digits }}?text={{ text | url_encode }}

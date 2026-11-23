@@ -1,0 +1,11 @@
+<div class="marq" aria-hidden="true"><div class="track">
+  {%- for i in (1..2) -%}{%- for block in section.blocks -%}<span {{ block.shopify_attributes }}>{{ block.settings.text }}</span>{%- endfor -%}{%- endfor -%}
+</div></div>
+{% schema %}
+{
+  "name": "Scritta scorrevole",
+  "max_blocks": 12,
+  "blocks": [{ "type": "item", "name": "Testo", "settings": [{ "type": "text", "id": "text", "label": "Testo", "default": "Luxury Watches" }] }],
+  "presets": [{ "name": "Scritta scorrevole", "blocks": [{ "type": "item", "settings": { "text": "Luxury Watches" } }, { "type": "item", "settings": { "text": "Designer Bags" } }, { "type": "item", "settings": { "text": "Diamonds" } }, { "type": "item", "settings": { "text": "Iced Out" } }] }]
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+<div class="page-wrap"><div class="wrap">
+  <h1>{{ 'search.title' | t }}</h1>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
+    <label class="sr" for="q">{{ 'search.title' | t }}</label>
+    <input id="q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'search.placeholder' | t }}">
+    <input type="hidden" name="type" value="product">
+    <button class="btn btn-gold" type="submit">{{ 'search.submit' | t }}</button>
+  </form>
+  {%- if search.performed -%}
+    <div class="grid">
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
+      {%- else -%}
+        <div class="empty" style="grid-column:1/-1">{{ 'search.none' | t: terms: search.terms }}</div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div></div>
+{% schema %}
+{ "name": "Ricerca", "settings": [] }
+{% endschema %}

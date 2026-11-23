@@ -1,0 +1,30 @@
+{%- capture wa_text -%}{{ section.settings.wa_message }}{%- endcapture -%}
+<section class="s">
+  <div class="wrap">
+    <div class="vip reveal">
+      <div class="vault"><span></span></div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.title }}</h2>
+      <p>{{ section.settings.text }}</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        {%- if section.settings.link_label != blank -%}<a href="{{ section.settings.link | default: routes.all_products_collection_url }}" class="btn btn-gold">{{ section.settings.link_label }}</a>{%- endif -%}
+        {%- if settings.whatsapp_number != blank -%}<a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ section.settings.wa_label }}</a>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Stanza VIP",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Exclusive Drops" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "La stanza VIP" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Nuovi arrivi e pezzi da collezione, spesso venduti prima di arrivare online. Chi è in lista li vede per primo." },
+    { "type": "text", "id": "link_label", "label": "Pulsante", "default": "Apri il caveau" },
+    { "type": "url", "id": "link", "label": "Link pulsante" },
+    { "type": "text", "id": "wa_label", "label": "Pulsante WhatsApp", "default": "Lista VIP" },
+    { "type": "textarea", "id": "wa_message", "label": "Messaggio WhatsApp", "default": "Ciao Giacomino! Vorrei entrare nella lista VIP per gli Exclusive Drops." }
+  ],
+  "presets": [{ "name": "Stanza VIP" }]
+}
+{% endschema %}

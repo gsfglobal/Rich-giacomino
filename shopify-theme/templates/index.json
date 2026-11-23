@@ -1,0 +1,228 @@
+{
+  "sections": {
+    "hero": {
+      "type": "rich-hero",
+      "settings": {}
+    },
+    "marquee": {
+      "type": "marquee",
+      "blocks": {
+        "m0": {
+          "type": "item",
+          "settings": {
+            "text": "Luxury Watches"
+          }
+        },
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Designer Bags"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Diamonds"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Iced Out"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "Exclusive Drops"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "Welcome to the Rich World"
+          }
+        }
+      },
+      "block_order": [
+        "m0",
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5"
+      ]
+    },
+    "boutiques": {
+      "type": "boutiques",
+      "blocks": {
+        "b0": {
+          "type": "boutique",
+          "settings": {
+            "title": "Watch District",
+            "number": "01",
+            "text": "Orologi premium dei marchi realmente disponibili.",
+            "neon": "#D4AF65",
+            "art": "watch",
+            "art_color": "gold"
+          }
+        },
+        "b1": {
+          "type": "boutique",
+          "settings": {
+            "title": "Designer Bags",
+            "number": "02",
+            "text": "Borse firmate e accessori fashion.",
+            "neon": "#F8F8FA",
+            "art": "bag",
+            "art_color": "leather"
+          }
+        },
+        "b2": {
+          "type": "boutique",
+          "settings": {
+            "title": "Diamond District",
+            "number": "03",
+            "text": "Diamanti, collane, bracciali, anelli.",
+            "neon": "#39D8FF",
+            "art": "diamond",
+            "art_color": "ice"
+          }
+        },
+        "b3": {
+          "type": "boutique",
+          "settings": {
+            "title": "Iced Out",
+            "number": "04",
+            "text": "Cuban link, tennis, gioielli hip-hop.",
+            "neon": "#7437FF",
+            "art": "chain",
+            "art_color": "violet"
+          }
+        },
+        "b4": {
+          "type": "boutique",
+          "settings": {
+            "title": "Exclusive Drops",
+            "number": "05",
+            "text": "Nuovi arrivi e pezzi da collezione.",
+            "neon": "#D4AF65",
+            "art": "vault",
+            "art_color": "gold"
+          }
+        },
+        "b5": {
+          "type": "boutique",
+          "settings": {
+            "title": "Luxury Accessories",
+            "number": "06",
+            "text": "Altri pezzi esclusivi del catalogo.",
+            "neon": "#39D8FF",
+            "art": "shades",
+            "art_color": "gold"
+          }
+        }
+      },
+      "block_order": [
+        "b0",
+        "b1",
+        "b2",
+        "b3",
+        "b4",
+        "b5"
+      ],
+      "settings": {}
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {}
+    },
+    "vip": {
+      "type": "vip",
+      "settings": {}
+    },
+    "reels": {
+      "type": "tiktok-reels",
+      "blocks": {
+        "r0": {
+          "type": "reel",
+          "settings": {
+            "title": "Unboxing orologio"
+          }
+        },
+        "r1": {
+          "type": "reel",
+          "settings": {
+            "title": "Il caveau dei diamanti"
+          }
+        },
+        "r2": {
+          "type": "reel",
+          "settings": {
+            "title": "Iced out da vicino"
+          }
+        },
+        "r3": {
+          "type": "reel",
+          "settings": {
+            "title": "Nuovo drop"
+          }
+        }
+      },
+      "block_order": [
+        "r0",
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {}
+    },
+    "trust": {
+      "type": "trust",
+      "blocks": {
+        "t0": {
+          "type": "card",
+          "settings": {
+            "icon": "◆",
+            "title": "Condizione dichiarata",
+            "text": "<p>Ogni scheda indica <strong>Nuovo</strong>, <strong>Usato</strong> o <strong>Da verificare</strong>, con foto reali dei dettagli e dei segni d'uso.</p>"
+          }
+        },
+        "t1": {
+          "type": "card",
+          "settings": {
+            "icon": "▤",
+            "title": "Documenti e accessori",
+            "text": "<p>Per ogni pezzo indichiamo cosa è incluso: scatola, garanzia, certificati. Se manca qualcosa, lo scriviamo.</p>"
+          }
+        },
+        "t2": {
+          "type": "card",
+          "settings": {
+            "icon": "⇄",
+            "title": "Acquisto e consegna",
+            "text": "<p>Si parte da WhatsApp: richiesta, foto e video extra, poi appuntamento in sede o spedizione. Spedizioni in tutta Italia.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t2"
+      ],
+      "settings": {
+        "link_label": "Come funziona",
+        "link": "/pages/fiducia"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "boutiques",
+    "featured",
+    "vip",
+    "reels",
+    "trust"
+  ]
+}

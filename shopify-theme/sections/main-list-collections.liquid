@@ -1,0 +1,14 @@
+<div class="page-wrap"><div class="wrap">
+  <h1><span class="gold">{{ 'collections.boutiques' | t }}</span></h1>
+  <div class="grid">
+    {%- for collection in collections -%}
+      <a class="card" href="{{ collection.url }}">
+        <div class="ph">{%- if collection.featured_image -%}{{ collection.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: '' }}{%- else -%}{% render 'art', type: 'diamond' %}{%- endif -%}</div>
+        <div class="meta"><span class="nm">{{ collection.title }}</span><span class="av">{{ 'collections.count' | t: count: collection.products_count }}</span></div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div></div>
+{% schema %}
+{ "name": "Elenco boutique", "settings": [] }
+{% endschema %}

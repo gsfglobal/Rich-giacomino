@@ -1,0 +1,31 @@
+{%- comment -%} Params: product (or blank for placeholder), placeholder_type, placeholder_color, placeholder_title {%- endcomment -%}
+{%- if product != blank -%}
+  {%- capture cond -%}{% render 'condition', product: product %}{%- endcapture -%}
+  <a class="card reveal" href="{{ product.url }}">
+    <div class="ph">
+      {%- if cond != blank -%}<span class="chip">{{ cond }}</span>{%- endif -%}
+      {%- if product.featured_media -%}
+        {{ product.featured_media | image_url: width: 700 | image_tag: loading: 'lazy', widths: '360, 540, 700', sizes: '(min-width: 1000px) 25vw, 50vw', alt: product.featured_media.alt | default: product.title }}
+      {%- else -%}
+        {% render 'art', type: 'diamond' %}
+      {%- endif -%}
+    </div>
+    <div class="meta">
+      <span class="brand">{{ product.vendor }}</span>
+      <span class="nm">{{ product.title }}</span>
+      <span class="av">
+        {%- if product.available -%}{{ 'products.available' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
+      </span>
+      <span class="pr gold">{% render 'price', product: product %}</span>
+    </div>
+  </a>
+{%- else -%}
+  <div class="card">
+    <div class="ph"><span class="chip ex">{{ 'products.example' | t }}</span>{% render 'art', type: placeholder_type, color: placeholder_color %}</div>
+    <div class="meta">
+      <span class="brand">{{ 'products.example_brand' | t }}</span>
+      <span class="nm">{{ placeholder_title | default: 'products.example_title' | t }}</span>
+      <span class="pr gold">{{ 'products.price_on_request' | t }}</span>
+    </div>
+  </div>
+{%- endif -%}

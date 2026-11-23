@@ -1,0 +1,12 @@
+{%- comment -%} Param: product. Shows the price only when it is set and not hidden {%- endcomment -%}
+{%- liquid
+  assign on_request = false
+  if settings.hide_prices or product.price == 0 or product.tags contains 'price-on-request'
+    assign on_request = true
+  endif
+-%}
+{%- if on_request -%}
+  {{- 'products.price_on_request' | t -}}
+{%- else -%}
+  {%- if product.price_varies -%}{{ 'products.from' | t }} {% endif -%}{{ product.price | money }}
+{%- endif -%}

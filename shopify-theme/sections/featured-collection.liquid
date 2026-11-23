@@ -1,0 +1,32 @@
+{%- assign coll = section.settings.collection -%}
+<section class="s" style="padding-top:20px">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div>
+      <a href="{{ coll.url | default: routes.all_products_collection_url }}" class="btn btn-ghost">{{ section.settings.link_label }}</a>
+    </div>
+    <div class="grid">
+      {%- if coll != blank and coll.products_count > 0 -%}
+        {%- for product in coll.products limit: section.settings.limit -%}{% render 'product-card', product: product %}{%- endfor -%}
+      {%- else -%}
+        {% render 'product-card', placeholder_type: 'watch', placeholder_color: 'steel' %}
+        {% render 'product-card', placeholder_type: 'diamond' %}
+        {% render 'product-card', placeholder_type: 'chain', placeholder_color: 'gold' %}
+        {% render 'product-card', placeholder_type: 'bag', placeholder_color: 'leather' %}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Pezzi in evidenza",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collezione" },
+    { "type": "range", "id": "limit", "label": "Numero di pezzi", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "In vetrina" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Pezzi in evidenza" },
+    { "type": "text", "id": "link_label", "label": "Testo link", "default": "Tutto il catalogo" }
+  ],
+  "presets": [{ "name": "Pezzi in evidenza" }]
+}
+{% endschema %}

@@ -1,0 +1,52 @@
+{%- liquid
+  assign s = section.settings
+  capture wa_text
+    echo s.wa_message
+  endcapture
+-%}
+<section class="hero" id="hero" data-diamond="{% if s.diamond != blank %}{{ s.diamond | image_url: width: 900 }}{% else %}{{ 'diamond.webp' | asset_url }}{% endif %}" data-sign="{{ s.sign | escape }}" data-three="{{ 'three.min.js' | asset_url }}">
+  <div class="stick">
+    <div class="fallback-hero"></div>
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="veil"></div>
+    <div class="char" id="char" aria-hidden="true">
+      {%- if s.character != blank -%}
+        {{ s.character | image_url: width: 760 | image_tag: alt: '', fetchpriority: 'high', loading: 'eager' }}
+      {%- else -%}
+        <img src="{{ 'char.webp' | asset_url }}" alt="" width="700" height="875" fetchpriority="high">
+      {%- endif -%}
+    </div>
+    {%- if s.badge != blank -%}<span class="badge-demo">{{ s.badge }}</span>{%- endif -%}
+    <div class="copy">
+      {%- if s.eyebrow != blank -%}<p class="eyebrow">{{ s.eyebrow }}</p>{%- endif -%}
+      <h1><span class="l1 gold">{{ s.line1 }}</span><span class="l2">{{ s.line2 }}</span></h1>
+      {%- if s.sub != blank -%}<p class="sub">{{ s.sub }}</p>{%- endif -%}
+      <div class="ctas">
+        {%- if s.cta_label != blank -%}<a href="{{ s.cta_link | default: routes.all_products_collection_url }}" class="btn btn-gold">{{ s.cta_label }}</a>{%- endif -%}
+        {%- if settings.whatsapp_number != blank and s.wa_label != blank -%}
+          <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ s.wa_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Hero 3D Rich World",
+  "settings": [
+    { "type": "image_picker", "id": "character", "label": "Personaggio (PNG/WebP scontornato)" },
+    { "type": "image_picker", "id": "diamond", "label": "Diamante (PNG/WebP scontornato)" },
+    { "type": "text", "id": "sign", "label": "Insegna della boutique 3D", "default": "RICH WORLD" },
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Richgiacomino · Bee Diamonds" },
+    { "type": "text", "id": "line1", "label": "Titolo riga 1", "default": "Welcome to the 💎" },
+    { "type": "text", "id": "line2", "label": "Titolo riga 2", "default": "Rich World" },
+    { "type": "text", "id": "sub", "label": "Sottotitolo", "default": "Luxury Watches. Designer Bags. Diamonds. Exclusive Pieces." },
+    { "type": "text", "id": "cta_label", "label": "Pulsante principale", "default": "Explore the collection" },
+    { "type": "url", "id": "cta_link", "label": "Link pulsante principale" },
+    { "type": "text", "id": "wa_label", "label": "Pulsante WhatsApp", "default": "Shop on WhatsApp" },
+    { "type": "textarea", "id": "wa_message", "label": "Messaggio WhatsApp", "default": "Ciao Giacomino! Ho visto il Rich World e vorrei informazioni sui pezzi disponibili." },
+    { "type": "text", "id": "badge", "label": "Etichetta in alto a destra (vuoto = nascosta)" }
+  ],
+  "presets": [{ "name": "Hero 3D Rich World" }]
+}
+{% endschema %}

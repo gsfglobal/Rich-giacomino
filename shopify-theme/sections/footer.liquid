@@ -1,0 +1,44 @@
+{%- capture wa_text -%}{{ 'whatsapp.generic' | t: shop: shop.name }}{%- endcapture -%}
+<footer>
+  <div class="wrap">
+    <div class="fgrid">
+      <div>
+        <a href="{{ routes.root_url }}" class="logo" style="margin-bottom:12px"><svg class="gem" aria-hidden="true"><use href="#i-gem"/></svg><span>{{ section.settings.title }}<small>{{ section.settings.subtitle }}</small></span></a>
+        {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+        {%- if settings.whatsapp_number != blank -%}
+          <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" style="margin-top:16px" target="_blank" rel="noopener">{% render 'icon-wa' %}WhatsApp</a>
+        {%- endif -%}
+      </div>
+      <div>
+        <h2 class="fh">{{ section.settings.menu_title }}</h2>
+        {%- for link in section.settings.menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      </div>
+      <div>
+        <h2 class="fh">{{ section.settings.info_title }}</h2>
+        {%- for link in section.settings.menu2.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+        {%- if settings.tiktok_url != blank -%}<a href="{{ settings.tiktok_url }}" target="_blank" rel="noopener">TikTok ↗</a>{%- endif -%}
+        {%- if settings.instagram_url != blank -%}<a href="{{ settings.instagram_url }}" target="_blank" rel="noopener">Instagram ↗</a>{%- endif -%}
+        {%- if settings.address != blank -%}<p>{{ settings.address }}</p>{%- endif -%}
+        {%- if settings.phone != blank -%}<a href="tel:{{ settings.phone | remove: ' ' }}">{{ settings.phone }}</a>{%- endif -%}
+        {%- if section.settings.shipping != blank -%}<p>{{ section.settings.shipping }}</p>{%- endif -%}
+      </div>
+    </div>
+    <div class="fine">© {{ 'now' | date: '%Y' }} {{ shop.name }}{% if section.settings.legal != blank %} · {{ section.settings.legal }}{% endif %}</div>
+  </div>
+</footer>
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Nome", "default": "RICHGIACOMINO" },
+    { "type": "text", "id": "subtitle", "label": "Sottotitolo", "default": "BEE DIAMONDS" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Orologi di lusso, borse firmate, diamanti e pezzi esclusivi. Richieste e appuntamenti su WhatsApp." },
+    { "type": "text", "id": "menu_title", "label": "Titolo menu 1", "default": "Boutique" },
+    { "type": "link_list", "id": "menu", "label": "Menu 1", "default": "main-menu" },
+    { "type": "text", "id": "info_title", "label": "Titolo colonna info", "default": "Info" },
+    { "type": "link_list", "id": "menu2", "label": "Menu 2", "default": "footer" },
+    { "type": "text", "id": "shipping", "label": "Spedizioni", "default": "Spedizioni in tutta Italia" },
+    { "type": "textarea", "id": "legal", "label": "Note legali", "default": "I marchi citati appartengono ai rispettivi proprietari; Bee Diamonds non è rivenditore autorizzato." }
+  ]
+}
+{% endschema %}

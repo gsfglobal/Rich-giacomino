@@ -1,0 +1,72 @@
+{
+  "general": {
+    "skip": "Skip to content",
+    "menu": "Menu",
+    "open_menu": "Open menu",
+    "close": "Close",
+    "guide": "Giacomino",
+    "page": "Page {{ page }}",
+    "pagination": "Pages",
+    "previous": "Previous",
+    "next": "Next",
+    "not_found": "This page does not exist. Back to the Rich World."
+  },
+  "whatsapp": {
+    "generic": "Hi Giacomino! I'm writing from {{ shop }}.",
+    "aria": "Chat on WhatsApp",
+    "collection": "Hi Giacomino! I'm in the {{ collection }} boutique on your site: what's available?",
+    "product": "Hi Giacomino! I'm interested in: {{ vendor }} — {{ title }}",
+    "looking": "Hi Giacomino! I'm looking for a piece I can't find on the site."
+  },
+  "sections": {
+    "enter": "Enter",
+    "ask": "Ask Giacomino",
+    "all_catalog": "Full catalogue"
+  },
+  "products": {
+    "price_on_request": "PRICE ON REQUEST",
+    "from": "From",
+    "available": "Available",
+    "sold": "Sold",
+    "example": "Example",
+    "example_brand": "Brand",
+    "example_title": "Your piece here",
+    "photo": "Photo {{ n }}",
+    "variant": "Variant",
+    "add_to_cart": "Add to cart",
+    "ask_whatsapp": "Ask on WhatsApp",
+    "brand": "Brand",
+    "reference": "Model / reference",
+    "condition": "Condition",
+    "materials": "Materials",
+    "accessories": "Papers and accessories",
+    "year": "Year"
+  },
+  "collections": {
+    "filters": "Filters",
+    "all": "all",
+    "price_min": "Min price",
+    "price_max": "Max price",
+    "apply": "Apply",
+    "count": {
+      "one": "1 piece",
+      "other": "{{ count }} pieces"
+    },
+    "empty": "No pieces match these filters.",
+    "boutiques": "Boutiques"
+  },
+  "cart": {
+    "title": "Cart",
+    "quantity": "Quantity",
+    "total": "Total",
+    "update": "Update",
+    "checkout": "Checkout",
+    "empty": "Your cart is empty."
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Rolex, tennis, Cuban link…",
+    "submit": "Search",
+    "none": "No results for \"{{ terms }}\"."
+  }
+}

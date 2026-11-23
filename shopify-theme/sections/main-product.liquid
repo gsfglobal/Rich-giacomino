@@ -1,0 +1,92 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign mf = product.metafields.custom
+  capture cond
+    render 'condition', product: product
+  endcapture
+  assign ref = mf.referenza.value
+  capture wa_text
+    echo 'whatsapp.product' | t: vendor: product.vendor, title: product.title
+    if ref != blank
+      echo ' (' | append: ref | append: ')'
+    endif
+    echo ' ' | append: shop.url | append: product.url
+  endcapture
+  assign first_coll = product.collections | first
+-%}
+<div class="pp">
+  <div class="wrap">
+    <p class="crumbs"><a href="{{ routes.root_url }}">{{ shop.name }}</a>{% if first_coll %} / <a href="{{ first_coll.url }}">{{ first_coll.title }}</a>{% endif %} / {{ product.title }}</p>
+    <div class="pp-grid">
+      <div>
+        <div class="gal-main" id="pMain">
+          {%- if cond != blank -%}<span class="chip">{{ cond }}</span>{%- endif -%}
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 1100 | image_tag: loading: 'eager', widths: '600, 900, 1100', sizes: '(min-width: 860px) 55vw, 100vw', alt: product.featured_media.alt | default: product.title, id: 'pMainImg' }}
+          {%- else -%}
+            {% render 'art', type: 'diamond' %}
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="gal-thumbs">
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button type="button" class="{% if forloop.first %}on{% endif %}" data-src="{{ media | image_url: width: 1100 }}" aria-label="{{ 'products.photo' | t: n: forloop.index }}">
+                  {{ media | image_url: width: 200 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <div>
+        <p class="eyebrow">{{ product.vendor }}</p>
+        <h1>{{ product.title }}</h1>
+        {%- if ref != blank -%}<p class="muted">{{ ref }}</p>{%- endif -%}
+        <p class="price gold">{% render 'price', product: product %}</p>
+        <p class="muted" style="font-size:.88rem">
+          {%- if mf.disponibilita.value != blank -%}{{ mf.disponibilita.value }}{%- elsif product.available -%}{{ 'products.available' | t }}{%- else -%}{{ 'products.sold' | t }}{%- endif -%}
+        </p>
+
+        {%- if settings.enable_cart and product.available -%}
+          {%- form 'product', product, id: 'ProductForm' -%}
+            {%- unless product.has_only_default_variant -%}
+              <label class="variant">{{ 'products.variant' | t }}
+                <select name="id">
+                  {%- for v in product.variants -%}<option value="{{ v.id }}"{% if v == current_variant %} selected{% endif %}{% unless v.available %} disabled{% endunless %}>{{ v.title }}</option>{%- endfor -%}
+                </select>
+              </label>
+            {%- else -%}
+              <input type="hidden" name="id" value="{{ current_variant.id }}">
+            {%- endunless -%}
+            <button type="submit" class="btn btn-gold" style="width:100%;margin-top:18px">{{ 'products.add_to_cart' | t }}</button>
+          {%- endform -%}
+        {%- endif -%}
+
+        {%- if settings.whatsapp_number != blank -%}
+          <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" style="width:100%;margin-top:14px" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ 'products.ask_whatsapp' | t }}</a>
+        {%- endif -%}
+
+        <table class="specs">
+          <tr><th scope="row">{{ 'products.brand' | t }}</th><td>{{ product.vendor }}</td></tr>
+          {%- if ref != blank -%}<tr><th scope="row">{{ 'products.reference' | t }}</th><td>{{ ref }}</td></tr>{%- endif -%}
+          {%- if cond != blank -%}<tr><th scope="row">{{ 'products.condition' | t }}</th><td>{{ cond }}</td></tr>{%- endif -%}
+          {%- if mf.materiali.value != blank -%}<tr><th scope="row">{{ 'products.materials' | t }}</th><td>{{ mf.materiali.value }}</td></tr>{%- endif -%}
+          {%- if mf.accessori.value != blank -%}<tr><th scope="row">{{ 'products.accessories' | t }}</th><td>{{ mf.accessori.value }}</td></tr>{%- endif -%}
+          {%- if mf.anno.value != blank -%}<tr><th scope="row">{{ 'products.year' | t }}</th><td>{{ mf.anno.value }}</td></tr>{%- endif -%}
+        </table>
+        {%- if product.description != blank -%}<div class="rte">{{ product.description }}</div>{%- endif -%}
+        {%- if section.settings.note != blank -%}<div class="note">{{ section.settings.note }}</div>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/ld+json">{{ product | structured_data }}</script>
+{% schema %}
+{
+  "name": "Scheda prodotto",
+  "settings": [
+    { "type": "textarea", "id": "note", "label": "Nota sotto la scheda", "default": "Bee Diamonds è un'attività indipendente: non è rivenditore autorizzato dei marchi presenti. Condizione, documenti e accessori sono indicati pezzo per pezzo e vanno sempre confermati prima dell'acquisto." }
+  ]
+}
+{% endschema %}

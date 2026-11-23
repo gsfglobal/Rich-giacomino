@@ -1,0 +1,8 @@
+{%- if page.content != blank -%}
+<section class="s" style="padding-top:50px">
+  <div class="wrap rte" style="max-width:760px">{{ page.content }}</div>
+</section>
+{%- endif -%}
+{% schema %}
+{ "name": "Contenuto pagina", "settings": [] }
+{% endschema %}

@@ -1,0 +1,23 @@
+{%- assign coll = product.collections | first -%}
+{%- if coll and coll.products_count > 1 -%}
+<section class="s" style="padding-top:0">
+  <div class="wrap">
+    <div class="s-head"><div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div></div>
+    <div class="grid">
+      {%- assign shown = 0 -%}
+        {%- for p in coll.products -%}
+          {%- if p.id != product.id and shown < 4 -%}{% render 'product-card', product: p %}{%- assign shown = shown | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
+{% schema %}
+{
+  "name": "Pezzi correlati",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "Dalla stessa boutique" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Potrebbe piacerti" }
+  ]
+}
+{% endschema %}

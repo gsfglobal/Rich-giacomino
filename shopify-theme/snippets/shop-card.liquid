@@ -1,0 +1,28 @@
+{%- comment -%} Boutique card. Params: block {%- endcomment -%}
+{%- liquid
+  assign b = block.settings
+  assign link = routes.all_products_collection_url
+  if b.collection != blank
+    assign link = b.collection.url
+  endif
+  assign title = b.title | default: b.collection.title
+  assign neon = b.neon
+-%}
+<a class="shop reveal" href="{{ link }}" {{ block.shopify_attributes }} style="--neon:{{ neon }}">
+  <div class="facade" aria-hidden="true">
+    {%- if b.image != blank -%}
+      {{ b.image | image_url: width: 900 | image_tag: loading: 'lazy', style: 'width:100%;height:100%;object-fit:cover;opacity:.75' }}
+    {%- else -%}
+      <div class="facade-svg">
+        <span class="fs-sign">{{ title }}</span>
+        <div class="fs-win">{% render 'art', type: b.art, color: b.art_color %}</div>
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="info">
+    {%- if b.number != blank -%}<span class="eyebrow">{{ b.number }}</span>{%- endif -%}
+    <h3>{{ title }}</h3>
+    {%- if b.text != blank -%}<p>{{ b.text }}</p>{%- endif -%}
+    <span class="go">{{ 'sections.enter' | t }} →</span>
+  </div>
+</a>

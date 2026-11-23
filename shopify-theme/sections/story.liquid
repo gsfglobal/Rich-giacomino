@@ -1,0 +1,38 @@
+<section class="s">
+  <div class="wrap story">
+    <div>
+      <div class="arch">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 760 | image_tag: loading: 'lazy', alt: section.settings.image.alt | default: section.settings.title }}
+        {%- else -%}
+          <img src="{{ 'char.webp' | asset_url }}" alt="{{ section.settings.title | escape }}" width="700" height="875" loading="lazy">
+        {%- endif -%}
+      </div>
+    </div>
+    <div>
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 style="font-size:clamp(1.8rem,5vw,2.8rem);margin:12px 0 18px">{{ section.settings.title }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
+        {%- if settings.tiktok_url != blank -%}<a href="{{ settings.tiktok_url }}" target="_blank" rel="noopener" class="btn btn-ghost">TikTok ↗</a>{%- endif -%}
+        {%- if settings.whatsapp_number != blank -%}
+          {%- capture wa_text -%}{{ 'whatsapp.generic' | t: shop: shop.name }}{%- endcapture -%}
+          <a href="{% render 'wa-url', text: wa_text %}" class="btn btn-wa" target="_blank" rel="noopener">{% render 'icon-wa' %}{{ section.settings.wa_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Storia / personaggio",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Immagine nell'arco" },
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "La storia" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Da dealer a personaggio" },
+    { "type": "richtext", "id": "text", "label": "Testo", "default": "<p>Qui va la storia vera di Giacomino: come ha iniziato, perché il nome Bee Diamonds, cosa lo distingue, la community nata su TikTok.</p>" },
+    { "type": "text", "id": "wa_label", "label": "Pulsante WhatsApp", "default": "Scrivigli" }
+  ],
+  "presets": [{ "name": "Storia / personaggio" }]
+}
+{% endschema %}

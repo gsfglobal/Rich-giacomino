@@ -1,0 +1,41 @@
+<section class="s">
+  <div class="wrap">
+    <div class="s-head reveal">
+      <div><p class="eyebrow">{{ section.settings.eyebrow }}</p><h2>{{ section.settings.title }}</h2></div>
+      {%- if section.settings.text != blank -%}<p>{{ section.settings.text }}</p>{%- endif -%}
+    </div>
+    <div class="map scroller">
+      {%- for block in section.blocks -%}{% render 'shop-card', block: block %}{%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Boutique (collezioni)",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Sopratitolo", "default": "La mappa del quartiere" },
+    { "type": "text", "id": "title", "label": "Titolo", "default": "Le boutique del Rich World" },
+    { "type": "textarea", "id": "text", "label": "Testo", "default": "Ogni boutique è una categoria. Entra, guarda da vicino, chiedi su WhatsApp con un tocco." }
+  ],
+  "blocks": [{
+    "type": "boutique", "name": "Boutique",
+    "settings": [
+      { "type": "collection", "id": "collection", "label": "Collezione" },
+      { "type": "text", "id": "title", "label": "Nome (vuoto = nome collezione)" },
+      { "type": "text", "id": "number", "label": "Numero", "default": "01" },
+      { "type": "text", "id": "text", "label": "Descrizione breve" },
+      { "type": "color", "id": "neon", "label": "Colore neon", "default": "#D4AF65" },
+      { "type": "select", "id": "art", "label": "Illustrazione", "default": "watch", "options": [
+        { "value": "watch", "label": "Orologio" }, { "value": "bag", "label": "Borsa" }, { "value": "diamond", "label": "Diamante" },
+        { "value": "chain", "label": "Catena" }, { "value": "tennis", "label": "Tennis" }, { "value": "ring", "label": "Anello" },
+        { "value": "vault", "label": "Caveau" }, { "value": "shades", "label": "Occhiali" }, { "value": "belt", "label": "Cintura" } ] },
+      { "type": "select", "id": "art_color", "label": "Colore illustrazione", "default": "gold", "options": [
+        { "value": "gold", "label": "Oro" }, { "value": "steel", "label": "Acciaio" }, { "value": "ice", "label": "Ghiaccio" },
+        { "value": "violet", "label": "Viola" }, { "value": "leather", "label": "Pelle" }, { "value": "black", "label": "Nero" } ] },
+      { "type": "image_picker", "id": "image", "label": "Foto vetrina (facoltativa, sostituisce l'illustrazione)" }
+    ]
+  }],
+  "presets": [{ "name": "Boutique (collezioni)" }]
+}
+{% endschema %}

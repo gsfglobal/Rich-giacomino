@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "title": "Fiducia &",
+        "gold": "autenticità",
+        "text": "Per acquisti di alto valore servono regole chiare. Qui trovi come presentiamo i pezzi e come funziona l'acquisto.",
+        "glow": "#39D8FF"
+      }
+    },
+    "trust": {
+      "type": "trust",
+      "blocks": {
+        "t0": {
+          "type": "card",
+          "settings": {
+            "icon": "◆",
+            "title": "Condizione dichiarata",
+            "text": "<p>Ogni scheda indica <strong>Nuovo</strong>, <strong>Usato</strong> o <strong>Da verificare</strong>, con foto reali dei dettagli e dei segni d'uso.</p>"
+          }
+        },
+        "t1": {
+          "type": "card",
+          "settings": {
+            "icon": "▤",
+            "title": "Documenti e accessori",
+            "text": "<p>Per ogni pezzo indichiamo cosa è incluso: scatola, garanzia, certificati. Se manca qualcosa, lo scriviamo.</p>"
+          }
+        },
+        "t2": {
+          "type": "card",
+          "settings": {
+            "icon": "⇄",
+            "title": "Acquisto e consegna",
+            "text": "<p>Si parte da WhatsApp: richiesta, foto e video extra, poi appuntamento in sede o spedizione. Spedizioni in tutta Italia.</p>"
+          }
+        },
+        "t3": {
+          "type": "card",
+          "settings": {
+            "icon": "✓",
+            "title": "Verifica e autenticità",
+            "text": "<p>Descrivere qui solo le verifiche realmente offerte (es. controllo da orologiaio o gemmologo).</p>"
+          }
+        },
+        "t4": {
+          "type": "card",
+          "settings": {
+            "icon": "★",
+            "title": "Recensioni autentiche",
+            "text": "<p>Solo recensioni reali di clienti, collegate a Google o ai social.</p>"
+          }
+        },
+        "t5": {
+          "type": "card",
+          "settings": {
+            "icon": "⌖",
+            "title": "Contatti e sede",
+            "text": "<p>Oromare · Strada Provinciale 22, Km 1,750 · 81025 Marcianise (CE). WhatsApp e telefono: +39 392 579 1426.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "t0",
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5"
+      ],
+      "settings": {
+        "title": "",
+        "legal": "<p><strong>Trasparenza sui marchi.</strong> Bee Diamonds / Richgiacomino è un'attività indipendente e non è rivenditore autorizzato né affiliata a Rolex, Cartier, Patek Philippe o agli altri marchi presenti nel catalogo. I nomi dei marchi sono usati solo per identificare i prodotti e appartengono ai rispettivi proprietari.</p>",
+        "top_space": true
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "main"
+  ]
+}
